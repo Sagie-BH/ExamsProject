@@ -3,7 +3,7 @@ using Infrastructure.Persistence;
 
 namespace Application.Exams.Repositories
 {
-    public class AppExamRepository : EfRepository<AppExam>
+    public class AppExamRepository : GenericRepository<AppExam>
     {
         public AppExamRepository(ExamPrjDbContext context) : base(context) { }
     }

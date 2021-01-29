@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
-    public abstract class EfRepository<T> : IGenericRepository<T> where T : class, IAggregateRoot
+    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class, IAggregateRoot
     {
         private readonly ExamPrjDbContext context;
         private readonly DbSet<T> entities;
         public List<Exception> RepositoryExceptions;
 
-        public EfRepository(ExamPrjDbContext _context)
+        public GenericRepository(ExamPrjDbContext _context)
         {
             context = _context;
             entities = context.Set<T>();

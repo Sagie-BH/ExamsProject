@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamsWeb", "ExamsWeb\ExamsWeb.csproj", "{81049E7C-BA10-4FC4-92A4-6D62DBECB266}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{42789181-2C15-4415-819C-E51DDB0F3992}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{42789181-2C15-4415-819C-E51DDB0F3992}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

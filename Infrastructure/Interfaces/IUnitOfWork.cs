@@ -11,3 +11,4 @@ namespace Infrastructure.Interfaces
         Task<int> SaveChangesAsync();
     }
 }
+

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Users.Repositories
 {
-    public class TeacherRepository : EfRepository<Teacher>
+    public class TeacherRepository : GenericRepository<Teacher>
     {
         public TeacherRepository(ExamPrjDbContext context) : base(context) { }
     }
