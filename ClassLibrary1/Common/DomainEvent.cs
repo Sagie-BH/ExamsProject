@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Domain.Common
 {
+    // Not in use yet
     public interface IHasDomainEvent
     {
         public List<DomainEvent> DomainEvents { get; set; }

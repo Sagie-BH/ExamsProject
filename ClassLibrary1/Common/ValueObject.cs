@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Domain.Common
 {
+    // Not in use yet
+
     public abstract class ValueObject
     {
         protected static bool EqualOperator(ValueObject left, ValueObject right)

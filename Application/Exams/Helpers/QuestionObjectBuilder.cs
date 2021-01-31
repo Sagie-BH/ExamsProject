@@ -7,6 +7,8 @@ namespace Application.Exams.Helpers
 {
     public class QuestionObjectBuilder
     {
+        // Build methods for creating question objects
+
         private readonly QuestionObject question;
 
         public QuestionObjectBuilder(QuestionObject _question)

@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Entities.ObjectEntities;
 using Domain.Entities.Relational;
 using Domain.Entities.UserEntities;
+using Domain.Models;
 using Infrastructure.Interfaces;
 using Infrastructure.Persistence.Configuration;
 using Infrastructure.Persistence.Configuration.AppObjects;
@@ -20,6 +21,7 @@ namespace Infrastructure.Persistence
 {
     public class ExamPrjDbContext : IdentityDbContext
     {
+
         private readonly IMediator _mediator;
 
         public ExamPrjDbContext(DbContextOptions<ExamPrjDbContext> options, IMediator mediator) : base(options)
@@ -34,6 +36,7 @@ namespace Infrastructure.Persistence
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ExamQuestions> ExamQuestions { get; set; }
+        public DbSet<UserNotification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

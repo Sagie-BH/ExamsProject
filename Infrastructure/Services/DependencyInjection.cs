@@ -4,12 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Text;
+using Domain.Entities.ObjectEntities;
 
 namespace Infrastructure.Services
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddConnection(this IServiceCollection services, IConfiguration configuration)
         {
 
             services.AddDbContext<ExamPrjDbContext>(options =>
@@ -19,6 +20,5 @@ namespace Infrastructure.Services
 
             return services;
         }
-
     }
 }

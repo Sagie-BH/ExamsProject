@@ -3,7 +3,7 @@ using Domain.Interfaces;
 
 namespace Domain.Entities.Relational
 {
-    public class ExamQuestions : IAggregateRoot
+    public class ExamQuestions 
     {
         public long ExamId { get; set; }
         public AppExam Exam { get; set; }

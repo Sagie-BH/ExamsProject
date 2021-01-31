@@ -1,4 +1,5 @@
 ﻿using Domain.Interfaces;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence
+namespace Application.Common
 {
-    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class, IAggregateRoot
+    public abstract class EfRepository<T> : IRepository<T> where T : class, IAggregateRoot
     {
         private readonly ExamPrjDbContext context;
         private readonly DbSet<T> entities;
         public List<Exception> RepositoryExceptions;
 
-        public GenericRepository(ExamPrjDbContext _context)
+        public EfRepository(ExamPrjDbContext _context)
         {
             context = _context;
             entities = context.Set<T>();
@@ -78,20 +79,6 @@ namespace Infrastructure.Persistence
             }
         }
 
-        //public async Task<bool> SaveChangesAsync()
-        //{
-        //    return await context.SaveChangesAsync() > 0;
-        //}
 
-
-        //public Task<IQueryable<ClassRoom>> FindClassRoomByStudentAsync()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Task<IQueryable<ClassRoom>> FindClassRoomByTeacherAsync()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

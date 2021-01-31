@@ -14,6 +14,7 @@ using System.Reflection;
 using MediatR;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Application.Services;
 
 namespace ExamsWeb
 {
@@ -28,7 +29,9 @@ namespace ExamsWeb
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddInfrastructure(Configuration);
+            services.AddConnection(Configuration);
+
+            services.AddInfrastructure();
 
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
 

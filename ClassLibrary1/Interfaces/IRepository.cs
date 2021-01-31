@@ -3,15 +3,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IGenericRepository<TEntity> where TEntity : IAggregateRoot
+    public interface IRepository<TEntity> where TEntity : IAggregateRoot
     {
+        // Todo Change void Tasks!
+
         Task AddAsync(TEntity entity);
         Task EditAsync(TEntity entity, object key);
         Task DeleteAsync(TEntity entity);
         Task<TEntity> GetByIdAsync(long id);
         IQueryable<TEntity> GetAllAsync();
-
-        //Task<bool> SaveChangesAsync();
 
         //Task<List<T>> ListAsync<T>(ISpecification<T> spec)
 

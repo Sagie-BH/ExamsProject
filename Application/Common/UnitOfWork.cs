@@ -1,4 +1,11 @@
-﻿using Infrastructure.Interfaces;
+﻿using Application.Interfaces;
+using Domain.Entities;
+using Domain.Entities.ObjectEntities;
+using Domain.Entities.Relational;
+using Domain.Entities.UserEntities;
+using Domain.Interfaces;
+using Infrastructure.Interfaces;
+using Infrastructure.Interfaces.Repositories;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -6,29 +13,47 @@ using System.Threading.Tasks;
 
 namespace Application.Common
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ExamPrjDbContext _context;
         private bool _disposed = false;
         private IDbContextTransaction _transaction = null;
 
-        protected ExamPrjDbContext Context
-        {
-            get { return _context; }
-        }
+        public IAppExamRepository Exams { get; private set; }
+        public IQuestionObjectRepository Questions { get; private set; }
+        public ISubjectRepository Subjects { get; private set; }
+        public IClassRoomRepository ClassRooms { get; private set; }
+        public IStudentExamsRepository StudentExams { get; private set; }
+        public IStudentRepository Students { get; private set; }
+        public ITeacherRepository Teachers { get; private set; }
 
-        public UnitOfWork(ExamPrjDbContext context)
+        public UnitOfWork(ExamPrjDbContext context,
+            IAppExamRepository exams,
+            IQuestionObjectRepository questions,
+            ISubjectRepository subjects,
+            IClassRoomRepository classRooms,
+            IStudentExamsRepository studentExams,
+            IStudentRepository students,
+            ITeacherRepository teachers)
         {
             _context = context;
+            Exams = exams;
+            Questions = questions;
+            Subjects = subjects;
+            ClassRooms = classRooms;
+            StudentExams = studentExams;
+            Students = students;
+            Teachers = teachers;
             _transaction = _context.Database.BeginTransaction();
         }
+
 
         public Task<int> SaveChangesAsync()
         {
             Task<int> changes;
             try
             {
-                 changes = _context.SaveChangesAsync();
+                changes = _context.SaveChangesAsync();
                 _transaction.Commit();
             }
             catch
@@ -45,7 +70,7 @@ namespace Application.Common
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this._disposed)
+            if (!this._disposed)    //      !!!
             {
                 if (disposing)
                 {
@@ -53,7 +78,7 @@ namespace Application.Common
                     _context.Dispose();
                 }
             }
-            this._disposed = true;
+            this._disposed = true;   //     !!!
         }
 
         public void Dispose()
