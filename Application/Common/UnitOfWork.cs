@@ -23,7 +23,7 @@ namespace Application.Common
         public IQuestionObjectRepository Questions { get; private set; }
         public ISubjectRepository Subjects { get; private set; }
         public IClassRoomRepository ClassRooms { get; private set; }
-        public IStudentExamsRepository StudentExams { get; private set; }
+        public IFinishedExamsRepository StudentExams { get; private set; }
         public IStudentRepository Students { get; private set; }
         public ITeacherRepository Teachers { get; private set; }
 
@@ -32,7 +32,7 @@ namespace Application.Common
             IQuestionObjectRepository questions,
             ISubjectRepository subjects,
             IClassRoomRepository classRooms,
-            IStudentExamsRepository studentExams,
+            IFinishedExamsRepository studentExams,
             IStudentRepository students,
             ITeacherRepository teachers)
         {

@@ -20,5 +20,10 @@ namespace Application.Exams.Helpers
         {
             question.Title = title;
         }
+        //public QuestionObject CreateOpenQuestion(string question, Subject subject,
+        //    )
+        //{
+
+        //}
     }
 }

@@ -6,7 +6,7 @@ using Infrastructure.Persistence;
 
 namespace Application.Relational.Repositories
 {
-    public class ClassRoomRepository : EfRepository<ClassRoom>, IClassRoomRepository
+    public class ClassRoomRepository : Repository<ClassRoom>, IClassRoomRepository
     {
         public ClassRoomRepository(ExamPrjDbContext context) : base(context) { }
     }

@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Application.Common
 {
-    public abstract class EfRepository<T> : IRepository<T> where T : class, IAggregateRoot
+    public abstract class Repository<T> : IRepository<T> where T : class, IAggregateRoot
     {
         private readonly ExamPrjDbContext context;
         private readonly DbSet<T> entities;
         public List<Exception> RepositoryExceptions;
 
-        public EfRepository(ExamPrjDbContext _context)
+        public Repository(ExamPrjDbContext _context)
         {
             context = _context;
             entities = context.Set<T>();

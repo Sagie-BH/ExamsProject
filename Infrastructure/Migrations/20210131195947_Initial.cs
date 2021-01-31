@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -229,6 +229,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AvrageGrade = table.Column<double>(type: "float", nullable: false),
                     PersonalTeacherId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ClassRoomId = table.Column<long>(type: "bigint", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
@@ -265,9 +266,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SuccessRate = table.Column<double>(type: "float(3)", precision: 3, scale: 2, nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExamSubjectId = table.Column<long>(type: "bigint", nullable: true),
+                    SuccessRate = table.Column<double>(type: "float(3)", precision: 3, scale: 2, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TestTimeLimit = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -319,7 +319,34 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentExams",
+                name: "UserNotification",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Notification = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TeacherId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserNotification", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserNotification_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserNotification_Teachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teachers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FinishedExams",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -327,23 +354,19 @@ namespace Infrastructure.Migrations
                     IsDone = table.Column<bool>(type: "bit", nullable: false),
                     Grade = table.Column<double>(type: "float(3)", precision: 3, scale: 2, nullable: false),
                     StudentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ExamId = table.Column<long>(type: "bigint", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ExamId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentExams", x => x.Id);
+                    table.PrimaryKey("PK_FinishedExams", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudentExams_Exams_ExamId",
+                        name: "FK_FinishedExams_Exams_ExamId",
                         column: x => x.ExamId,
                         principalTable: "Exams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentExams_Students_StudentId",
+                        name: "FK_FinishedExams_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
@@ -457,6 +480,16 @@ namespace Infrastructure.Migrations
                 column: "ExamSubjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FinishedExams_ExamId",
+                table: "FinishedExams",
+                column: "ExamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FinishedExams_StudentId",
+                table: "FinishedExams",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_QuestionOption_QuestionId",
                 table: "QuestionOption",
                 column: "QuestionId");
@@ -465,16 +498,6 @@ namespace Infrastructure.Migrations
                 name: "IX_Questions_SubjectId",
                 table: "Questions",
                 column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentExams_ExamId",
-                table: "StudentExams",
-                column: "ExamId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentExams_StudentId",
-                table: "StudentExams",
-                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_ClassRoomId",
@@ -489,6 +512,16 @@ namespace Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Subjects_TeacherId",
                 table: "Subjects",
+                column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserNotification_StudentId",
+                table: "UserNotification",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserNotification_TeacherId",
+                table: "UserNotification",
                 column: "TeacherId");
         }
 
@@ -513,19 +546,22 @@ namespace Infrastructure.Migrations
                 name: "ExamQuestions");
 
             migrationBuilder.DropTable(
+                name: "FinishedExams");
+
+            migrationBuilder.DropTable(
                 name: "QuestionOption");
 
             migrationBuilder.DropTable(
-                name: "StudentExams");
+                name: "UserNotification");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Questions");
+                name: "Exams");
 
             migrationBuilder.DropTable(
-                name: "Exams");
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "Students");

@@ -5,7 +5,7 @@ using Infrastructure.Persistence;
 
 namespace Application.Users.Repositories
 {
-    public class NotificationsRepository : EfRepository<UserNotification>, INotificationsRepository
+    public class NotificationsRepository : Repository<UserNotification>, INotificationsRepository
     {
         public NotificationsRepository(ExamPrjDbContext context) : base(context) { }
     }

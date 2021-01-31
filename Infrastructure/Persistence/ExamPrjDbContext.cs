@@ -22,21 +22,15 @@ namespace Infrastructure.Persistence
     public class ExamPrjDbContext : IdentityDbContext
     {
 
-        private readonly IMediator _mediator;
+        public ExamPrjDbContext(DbContextOptions<ExamPrjDbContext> options) : base(options) { }
 
-        public ExamPrjDbContext(DbContextOptions<ExamPrjDbContext> options, IMediator mediator) : base(options)
-        {
-            _mediator = mediator;
-        }
         public DbSet<AppExam> Exams { get; set; }
         public DbSet<ClassRoom> ClassRooms { get; set; }
         public DbSet<QuestionObject> Questions { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<StudentExams> StudentExams { get; set; }
+        public DbSet<FinishedExams> FinishedExams { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<ExamQuestions> ExamQuestions { get; set; }
-        public DbSet<UserNotification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

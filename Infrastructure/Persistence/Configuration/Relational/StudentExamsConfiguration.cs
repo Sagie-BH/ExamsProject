@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Infrastructure.Persistence.Configuration.Relational
 {
-    class StudentExamsConfiguration : IEntityTypeConfiguration<StudentExams>
+    class StudentExamsConfiguration : IEntityTypeConfiguration<FinishedExams>
     {
-        public void Configure(EntityTypeBuilder<StudentExams> builder)
+        public void Configure(EntityTypeBuilder<FinishedExams> builder)
         {
             builder.Property(se => se.IsDone).IsRequired();
 

@@ -20,7 +20,7 @@ namespace Application.Services
             services.AddScoped<ISubjectRepository, SubjectRepository>();
 
             services.AddScoped<IClassRoomRepository, ClassRoomRepository>();
-            services.AddScoped<IStudentExamsRepository, StudentExamsRepository>();
+            services.AddScoped<IFinishedExamsRepository, FinishedExamsRepository>();
 
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ITeacherRepository, TeacherRepository>();

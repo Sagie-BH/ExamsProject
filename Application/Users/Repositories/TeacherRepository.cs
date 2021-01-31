@@ -5,7 +5,7 @@ using Infrastructure.Persistence;
 
 namespace Application.Users.Repositories
 {
-    public class TeacherRepository : EfRepository<Teacher>, ITeacherRepository
+    public class TeacherRepository : Repository<Teacher>, ITeacherRepository
     {
         public TeacherRepository(ExamPrjDbContext context) : base(context) { }
     }

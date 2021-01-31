@@ -5,7 +5,7 @@ using Infrastructure.Persistence;
 
 namespace Application.Exams.Repositories
 {
-    public class QuestionObjectRepository : EfRepository<QuestionObject>, IQuestionObjectRepository
+    public class QuestionObjectRepository : Repository<QuestionObject>, IQuestionObjectRepository
     {
         public QuestionObjectRepository(ExamPrjDbContext context) : base(context) { }
     }

@@ -3,10 +3,8 @@ using Domain.Interfaces;
 
 namespace Domain.Models
 {
-    public class UserNotification : AuditableEntity, IAggregateRoot
+    public class UserNotification :  IAggregateRoot
     {
-        // ?? App Object ??
-
         public long Id { get; set; }
         public string Notification { get; set; }
     }

@@ -14,10 +14,9 @@ namespace Application.Interfaces
         IQuestionObjectRepository Questions { get; }
         ISubjectRepository Subjects { get; }
         IClassRoomRepository ClassRooms { get; }
-        IStudentExamsRepository StudentExams { get; }
+        IFinishedExamsRepository StudentExams { get; }
         IStudentRepository Students { get; }
         ITeacherRepository Teachers { get; }
-        INotificationsRepository Notifications { get; }
         Task<int> SaveChangesAsync();
     }
 }

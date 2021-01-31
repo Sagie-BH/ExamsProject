@@ -29,11 +29,9 @@ namespace ExamsWeb
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddConnection(Configuration);
+            services.AddSqlServer(Configuration);
 
             services.AddInfrastructure();
-
-            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
 
             services.AddControllersWithViews();
         }

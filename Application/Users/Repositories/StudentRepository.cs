@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Application.Users.Repositories
 {
-    public class StudentRepository : EfRepository<Student>, IStudentRepository
+    public class StudentRepository : Repository<Student>, IStudentRepository
     {
         public StudentRepository(ExamPrjDbContext context) : base(context) { }
     }

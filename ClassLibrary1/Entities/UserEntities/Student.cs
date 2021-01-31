@@ -9,7 +9,7 @@ namespace Domain.Entities.UserEntities
         public double AvrageGrade { get; set; }
         public Teacher PersonalTeacher { get; set; }
 #nullable enable
-        public virtual ICollection<StudentExams>? Exams { get; }
+        public ICollection<FinishedExams>? Exams { get; }
 #nullable disable
     }
 }

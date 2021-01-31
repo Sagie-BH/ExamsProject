@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ExamPrjDbContext))]
-    [Migration("20210126092539_Init")]
-    partial class Init
+    [Migration("20210131195947_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,35 @@ namespace Infrastructure.Migrations
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
+
+            modelBuilder.Entity("Domain.Entities.FinishedExams", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<long?>("ExamId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Grade")
+                        .HasPrecision(3, 2)
+                        .HasColumnType("float(3)");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExamId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("FinishedExams");
+                });
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.AppExam", b =>
                 {
@@ -34,9 +63,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -49,7 +75,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("SuccessRate")
+                    b.Property<double?>("SuccessRate")
                         .HasPrecision(3, 2)
                         .HasColumnType("float(3)");
 
@@ -64,40 +90,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ExamSubjectId");
 
                     b.ToTable("Exams");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ObjectEntities.ClassRoom", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("ClassTeacherId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassTeacherId")
-                        .IsUnique()
-                        .HasFilter("[ClassTeacherId] IS NOT NULL");
-
-                    b.ToTable("ClassRooms");
                 });
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.QuestionObject", b =>
@@ -188,6 +180,40 @@ namespace Infrastructure.Migrations
                     b.ToTable("Subjects");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Relational.ClassRoom", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ClassTeacherId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassTeacherId")
+                        .IsUnique()
+                        .HasFilter("[ClassTeacherId] IS NOT NULL");
+
+                    b.ToTable("ClassRooms");
+                });
+
             modelBuilder.Entity("Domain.Entities.Relational.ExamQuestions", b =>
                 {
                     b.Property<long>("ExamId")
@@ -201,47 +227,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("ExamQuestions");
-                });
-
-            modelBuilder.Entity("Domain.Entities.StudentExams", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("ExamId")
-                        .HasColumnType("bigint");
-
-                    b.Property<double>("Grade")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("float(3)");
-
-                    b.Property<bool>("IsDone")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExamId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentExams");
                 });
 
             modelBuilder.Entity("Domain.Models.QuestionOption", b =>
@@ -280,6 +265,31 @@ namespace Infrastructure.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("QuestionOption");
+                });
+
+            modelBuilder.Entity("Domain.Models.UserNotification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Notification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TeacherId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("UserNotification");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -482,6 +492,9 @@ namespace Infrastructure.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<double>("AvrageGrade")
+                        .HasColumnType("float");
+
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
@@ -541,6 +554,21 @@ namespace Infrastructure.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FinishedExams", b =>
+                {
+                    b.HasOne("Domain.Entities.ObjectEntities.AppExam", "Exam")
+                        .WithMany()
+                        .HasForeignKey("ExamId");
+
+                    b.HasOne("Domain.Entities.UserEntities.Student", "Student")
+                        .WithMany("Exams")
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Domain.Entities.ObjectEntities.AppExam", b =>
                 {
                     b.HasOne("Domain.Entities.ObjectEntities.Subject", "ExamSubject")
@@ -548,15 +576,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("ExamSubjectId");
 
                     b.Navigation("ExamSubject");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ObjectEntities.ClassRoom", b =>
-                {
-                    b.HasOne("Domain.Entities.UserEntities.Teacher", "ClassTeacher")
-                        .WithOne("PersonalClass")
-                        .HasForeignKey("Domain.Entities.ObjectEntities.ClassRoom", "ClassTeacherId");
-
-                    b.Navigation("ClassTeacher");
                 });
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.QuestionObject", b =>
@@ -573,6 +592,15 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.UserEntities.Teacher", null)
                         .WithMany("Subjects")
                         .HasForeignKey("TeacherId");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Relational.ClassRoom", b =>
+                {
+                    b.HasOne("Domain.Entities.UserEntities.Teacher", "ClassTeacher")
+                        .WithOne("PersonalClass")
+                        .HasForeignKey("Domain.Entities.Relational.ClassRoom", "ClassTeacherId");
+
+                    b.Navigation("ClassTeacher");
                 });
 
             modelBuilder.Entity("Domain.Entities.Relational.ExamQuestions", b =>
@@ -592,21 +620,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("Domain.Entities.StudentExams", b =>
-                {
-                    b.HasOne("Domain.Entities.ObjectEntities.AppExam", "Exam")
-                        .WithMany()
-                        .HasForeignKey("ExamId");
-
-                    b.HasOne("Domain.Entities.UserEntities.Student", "Student")
-                        .WithMany("Exams")
-                        .HasForeignKey("StudentId");
-
-                    b.Navigation("Exam");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("Domain.Models.QuestionOption", b =>
                 {
                     b.HasOne("Domain.Entities.ObjectEntities.QuestionObject", "Question")
@@ -614,6 +627,17 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("QuestionId");
 
                     b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("Domain.Models.UserNotification", b =>
+                {
+                    b.HasOne("Domain.Entities.UserEntities.Student", null)
+                        .WithMany("Notifications")
+                        .HasForeignKey("StudentId");
+
+                    b.HasOne("Domain.Entities.UserEntities.Teacher", null)
+                        .WithMany("Notifications")
+                        .HasForeignKey("TeacherId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -669,7 +693,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.UserEntities.Student", b =>
                 {
-                    b.HasOne("Domain.Entities.ObjectEntities.ClassRoom", null)
+                    b.HasOne("Domain.Entities.Relational.ClassRoom", null)
                         .WithMany("Students")
                         .HasForeignKey("ClassRoomId");
 
@@ -700,11 +724,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Questions");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ObjectEntities.ClassRoom", b =>
-                {
-                    b.Navigation("Students");
-                });
-
             modelBuilder.Entity("Domain.Entities.ObjectEntities.QuestionObject", b =>
                 {
                     b.Navigation("Exams");
@@ -712,13 +731,22 @@ namespace Infrastructure.Migrations
                     b.Navigation("Options");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Relational.ClassRoom", b =>
+                {
+                    b.Navigation("Students");
+                });
+
             modelBuilder.Entity("Domain.Entities.UserEntities.Student", b =>
                 {
                     b.Navigation("Exams");
+
+                    b.Navigation("Notifications");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserEntities.Teacher", b =>
                 {
+                    b.Navigation("Notifications");
+
                     b.Navigation("PersonalClass");
 
                     b.Navigation("Subjects");

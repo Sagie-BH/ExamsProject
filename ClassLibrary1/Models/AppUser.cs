@@ -12,6 +12,8 @@ namespace Domain.Models
         public string LastName { get; set; }
         public Gender Gender { get; set; }
         public DateTime? BirthDate { get; set; }
-        public ICollection<UserNotification> Notifications { get; set; }
+#nullable enable
+        public ICollection<UserNotification>? Notifications { get; set; }
+#nullable disable
     }
 }

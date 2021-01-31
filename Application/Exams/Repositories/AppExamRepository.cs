@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Application.Exams.Repositories
 {
-    public class AppExamRepository : EfRepository<AppExam>, IAppExamRepository
+    public class AppExamRepository : Repository<AppExam>, IAppExamRepository
     {
         public AppExamRepository(ExamPrjDbContext context) : base(context) { }
     }

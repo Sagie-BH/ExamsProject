@@ -10,7 +10,7 @@ namespace Infrastructure.Services
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddConnection(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSqlServer(this IServiceCollection services, IConfiguration configuration)
         {
 
             services.AddDbContext<ExamPrjDbContext>(options =>

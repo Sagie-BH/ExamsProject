@@ -19,6 +19,35 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
+            modelBuilder.Entity("Domain.Entities.FinishedExams", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<long?>("ExamId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Grade")
+                        .HasPrecision(3, 2)
+                        .HasColumnType("float(3)");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExamId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("FinishedExams");
+                });
+
             modelBuilder.Entity("Domain.Entities.ObjectEntities.AppExam", b =>
                 {
                     b.Property<long>("Id")
@@ -198,47 +227,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("ExamQuestions");
                 });
 
-            modelBuilder.Entity("Domain.Entities.StudentExams", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("ExamId")
-                        .HasColumnType("bigint");
-
-                    b.Property<double>("Grade")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("float(3)");
-
-                    b.Property<bool>("IsDone")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExamId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentExams");
-                });
-
             modelBuilder.Entity("Domain.Models.QuestionOption", b =>
                 {
                     b.Property<long>("Id")
@@ -283,18 +271,6 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notification")
                         .HasColumnType("nvarchar(max)");
@@ -576,6 +552,21 @@ namespace Infrastructure.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FinishedExams", b =>
+                {
+                    b.HasOne("Domain.Entities.ObjectEntities.AppExam", "Exam")
+                        .WithMany()
+                        .HasForeignKey("ExamId");
+
+                    b.HasOne("Domain.Entities.UserEntities.Student", "Student")
+                        .WithMany("Exams")
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Domain.Entities.ObjectEntities.AppExam", b =>
                 {
                     b.HasOne("Domain.Entities.ObjectEntities.Subject", "ExamSubject")
@@ -625,21 +616,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Exam");
 
                     b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("Domain.Entities.StudentExams", b =>
-                {
-                    b.HasOne("Domain.Entities.ObjectEntities.AppExam", "Exam")
-                        .WithMany()
-                        .HasForeignKey("ExamId");
-
-                    b.HasOne("Domain.Entities.UserEntities.Student", "Student")
-                        .WithMany("Exams")
-                        .HasForeignKey("StudentId");
-
-                    b.Navigation("Exam");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Domain.Models.QuestionOption", b =>

@@ -6,8 +6,8 @@ using Infrastructure.Persistence;
 
 namespace Application.Relational.Repositories
 {
-    public class StudentExamsRepository : EfRepository<StudentExams>, IStudentExamsRepository
+    public class FinishedExamsRepository : Repository<FinishedExams>, IFinishedExamsRepository
     {
-        public StudentExamsRepository(ExamPrjDbContext context) : base(context) { }
+        public FinishedExamsRepository(ExamPrjDbContext context) : base(context) { }
     }
 }

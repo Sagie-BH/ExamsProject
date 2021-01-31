@@ -5,7 +5,7 @@ using Domain.Interfaces;
 
 namespace Domain.Entities
 {
-    public class StudentExams : AuditableEntity, IAggregateRoot
+    public class FinishedExams : IAggregateRoot
     {
         public long Id { get; set; }
         public bool IsDone { get; set; }
