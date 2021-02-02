@@ -15,7 +15,7 @@ namespace Application.Common
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ExamPrjDbContext _context;
+        private readonly ExamsAppDbContext _context;
         private bool _disposed = false;
         private IDbContextTransaction _transaction = null;
 
@@ -27,7 +27,7 @@ namespace Application.Common
         public IStudentRepository Students { get; private set; }
         public ITeacherRepository Teachers { get; private set; }
 
-        public UnitOfWork(ExamPrjDbContext context,
+        public UnitOfWork(ExamsAppDbContext context,
             IAppExamRepository exams,
             IQuestionObjectRepository questions,
             ISubjectRepository subjects,

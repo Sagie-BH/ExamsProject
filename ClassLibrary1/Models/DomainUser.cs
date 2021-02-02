@@ -1,13 +1,14 @@
 ﻿using Domain.Enums;
-using Microsoft.AspNetCore.Identity;
+using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-
+using System.Text;
 
 namespace Domain.Models
 {
-    public abstract class AppUser : IdentityUser
+    public abstract class DomainUser : IAggregateRoot
     {
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Gender Gender { get; set; }
@@ -15,5 +16,9 @@ namespace Domain.Models
 #nullable enable
         public ICollection<UserNotification>? Notifications { get; set; }
 #nullable disable
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
+        }
     }
 }

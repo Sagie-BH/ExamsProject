@@ -7,6 +7,6 @@ namespace Application.Users.Repositories
 {
     public class NotificationsRepository : Repository<UserNotification>, INotificationsRepository
     {
-        public NotificationsRepository(ExamPrjDbContext context) : base(context) { }
+        public NotificationsRepository(ExamsAppDbContext context) : base(context) { }
     }
 }

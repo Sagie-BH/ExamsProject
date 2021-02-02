@@ -25,5 +25,6 @@ namespace Application.Services
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ITeacherRepository, TeacherRepository>();
         }
+
     }
 }

@@ -8,6 +8,6 @@ namespace Application.Relational.Repositories
 {
     public class ClassRoomRepository : Repository<ClassRoom>, IClassRoomRepository
     {
-        public ClassRoomRepository(ExamPrjDbContext context) : base(context) { }
+        public ClassRoomRepository(ExamsAppDbContext context) : base(context) { }
     }
 }

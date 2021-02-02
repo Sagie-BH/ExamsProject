@@ -10,6 +10,6 @@ namespace Application.Users.Repositories
 {
     public class StudentRepository : Repository<Student>, IStudentRepository
     {
-        public StudentRepository(ExamPrjDbContext context) : base(context) { }
+        public StudentRepository(ExamsAppDbContext context) : base(context) { }
     }
 }

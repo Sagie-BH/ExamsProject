@@ -5,25 +5,24 @@ using Domain.Entities.Relational;
 using Domain.Entities.UserEntities;
 using Domain.Models;
 using Infrastructure.Interfaces;
+using Infrastructure.Models;
 using Infrastructure.Persistence.Configuration;
 using Infrastructure.Persistence.Configuration.AppObjects;
 using Infrastructure.Persistence.Configuration.AppUsers;
 using Infrastructure.Persistence.Configuration.Relational;
-using MediatR;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+
+
 
 namespace Infrastructure.Persistence
 {
-    public class ExamPrjDbContext : IdentityDbContext
+    public class ExamsAppDbContext : IdentityDbContext
     {
 
-        public ExamPrjDbContext(DbContextOptions<ExamPrjDbContext> options) : base(options) { }
+        public ExamsAppDbContext(DbContextOptions<ExamsAppDbContext> options) : base(options) { }
 
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<AppExam> Exams { get; set; }
         public DbSet<ClassRoom> ClassRooms { get; set; }
         public DbSet<QuestionObject> Questions { get; set; }

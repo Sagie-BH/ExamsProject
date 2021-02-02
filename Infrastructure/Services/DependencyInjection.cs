@@ -13,10 +13,10 @@ namespace Infrastructure.Services
         public static IServiceCollection AddSqlServer(this IServiceCollection services, IConfiguration configuration)
         {
 
-            services.AddDbContext<ExamPrjDbContext>(options =>
+            services.AddDbContext<ExamsAppDbContext>(options =>
                 options.UseSqlServer(
                          configuration.GetConnectionString("ExamDbConnection"),
-                         b => b.MigrationsAssembly(typeof(ExamPrjDbContext).Assembly.FullName)));
+                         b => b.MigrationsAssembly(typeof(ExamsAppDbContext).Assembly.FullName)));
 
             return services;
         }

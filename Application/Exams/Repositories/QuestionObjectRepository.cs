@@ -7,6 +7,6 @@ namespace Application.Exams.Repositories
 {
     public class QuestionObjectRepository : Repository<QuestionObject>, IQuestionObjectRepository
     {
-        public QuestionObjectRepository(ExamPrjDbContext context) : base(context) { }
+        public QuestionObjectRepository(ExamsAppDbContext context) : base(context) { }
     }
 }

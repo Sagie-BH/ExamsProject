@@ -7,6 +7,6 @@ namespace Application.Exams.Repositories
 {
     public class SubjectRepository : Repository<Subject>, ISubjectRepository
     {
-        public SubjectRepository(ExamPrjDbContext context) : base(context) { }
+        public SubjectRepository(ExamsAppDbContext context) : base(context) { }
     }
 }

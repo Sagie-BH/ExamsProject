@@ -1,20 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Infrastructure;
 using Infrastructure.Services;
-using System.Reflection;
-using MediatR;
-using Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Application.Services;
+using Microsoft.AspNetCore.Identity;
+using Infrastructure.Persistence;
+using Infrastructure.Models;
 
 namespace ExamsWeb
 {
@@ -32,6 +25,15 @@ namespace ExamsWeb
             services.AddSqlServer(Configuration);
 
             services.AddInfrastructure();
+
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 5;
+
+            }).AddEntityFrameworkStores<ExamsAppDbContext>();
 
             services.AddControllersWithViews();
         }
@@ -52,6 +54,8 @@ namespace ExamsWeb
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

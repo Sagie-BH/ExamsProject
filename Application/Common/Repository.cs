@@ -11,11 +11,11 @@ namespace Application.Common
 {
     public abstract class Repository<T> : IRepository<T> where T : class, IAggregateRoot
     {
-        private readonly ExamPrjDbContext context;
+        private readonly ExamsAppDbContext context;
         private readonly DbSet<T> entities;
         public List<Exception> RepositoryExceptions;
 
-        public Repository(ExamPrjDbContext _context)
+        public Repository(ExamsAppDbContext _context)
         {
             context = _context;
             entities = context.Set<T>();

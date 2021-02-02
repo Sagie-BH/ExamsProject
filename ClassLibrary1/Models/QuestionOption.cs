@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Domain.Models
 {
-    public class QuestionOption : AppObject
+    public class QuestionOption : DomainObject
     {
         public bool IsRightAnswer { get; set; }
         public string Text { get; set; }

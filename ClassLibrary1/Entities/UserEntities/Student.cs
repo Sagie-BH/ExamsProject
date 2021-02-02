@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Domain.Entities.UserEntities
 {
-    public class Student : AppUser, IAggregateRoot
+    public class Student : DomainUser
     {
         public double AvrageGrade { get; set; }
         public Teacher PersonalTeacher { get; set; }

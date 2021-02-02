@@ -8,6 +8,6 @@ namespace Application.Relational.Repositories
 {
     public class FinishedExamsRepository : Repository<FinishedExams>, IFinishedExamsRepository
     {
-        public FinishedExamsRepository(ExamPrjDbContext context) : base(context) { }
+        public FinishedExamsRepository(ExamsAppDbContext context) : base(context) { }
     }
 }

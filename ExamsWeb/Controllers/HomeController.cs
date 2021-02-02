@@ -1,5 +1,10 @@
 ﻿using Application.Interfaces;
+using Domain.Entities.UserEntities;
+using Domain.Models;
 using ExamsWeb.Models;
+using ExamsWeb.ViewModels.Account;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,12 +18,10 @@ namespace ExamsWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUnitOfWork unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            this.unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
@@ -30,6 +33,7 @@ namespace ExamsWeb.Controllers
         {
             return View();
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

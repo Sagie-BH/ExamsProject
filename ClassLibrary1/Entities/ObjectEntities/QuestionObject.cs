@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Domain.Entities.ObjectEntities
 {
-    public class QuestionObject : AppObject, IAggregateRoot
+    public class QuestionObject : DomainObject, IAggregateRoot
     {
         public string Question { get; set; }
         public Subject Subject { get; set; }

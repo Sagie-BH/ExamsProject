@@ -10,6 +10,6 @@ namespace Application.Exams.Repositories
 {
     public class AppExamRepository : Repository<AppExam>, IAppExamRepository
     {
-        public AppExamRepository(ExamPrjDbContext context) : base(context) { }
+        public AppExamRepository(ExamsAppDbContext context) : base(context) { }
     }
 }

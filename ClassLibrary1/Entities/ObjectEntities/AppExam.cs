@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Domain.Entities.ObjectEntities
 {
-    public class AppExam : AppObject, IAggregateRoot
+    public class AppExam : DomainObject, IAggregateRoot
     {
         public Subject ExamSubject { get; set; }
 #nullable enable

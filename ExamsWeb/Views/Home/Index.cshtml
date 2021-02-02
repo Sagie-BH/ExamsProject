@@ -1,8 +1,75 @@
-﻿@{
+﻿
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!--- Carousel -->
+
+<div id="slides" class="carousel slide" data-ride="carousel">
+    <ul class="carousel-indicators">
+        <li data-target="#slides" data-slide-to="0" class="active"></li>
+        <li data-target="#slides" data-slide-to="1"></li>
+        <li data-target="#slides" data-slide-to="2"></li>
+    </ul>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/images/top-tools-in-automated-testing.png" />
+            <div class="carousel-caption">
+                <h3>Exam Portal</h3>
+                <button type="button" class="btn btn-outline-light btn-lg">View Demo</button>
+                <button type="button" class="btn btn-primary btn-lg">Get Started</button>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/1_lJqmv5MH1LO87hXesjx27A.png" />
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/build-your-students-test-taking-confidence.tmb-570.jpg" />
+        </div>
+    </div>
 </div>
+
+<!--- Welcome Section -->
+<div class="container-fluid padding">
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <h1 class="display-4">Built With Ease</h1>
+        </div>
+        <hr>
+        <div class="col-12">
+            <p class="lead">
+                Design your own tests with Exam Portal
+            </p>
+        </div>
+    </div>
+</div>
+
+<!--- Three Column Section -->
+<div class="container-fluid padding">
+    <div class="row text-center padding">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <i class="fas fa-code"></i>
+            <h3>Friends</h3>
+            <p>Create your own trivia and send to  your friends</p>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <i class="fas fa-bold"></i>
+            <h3>Teacher</h3>
+            <p>bla bla bla bla bla bla bla bla bla </p>
+        </div>
+        <div class="col-sm-12  col-md-4">
+            <i class="fab fa-css3"></i>
+            <h3>Students</h3>
+            <p>bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
+        </div>
+    </div>
+    <hr class="my-4">
+</div>
+
+
+
+
+
+<link href="~/css/HomeStyle.css" rel="stylesheet" />
