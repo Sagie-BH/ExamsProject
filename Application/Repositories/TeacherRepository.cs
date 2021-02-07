@@ -3,7 +3,7 @@ using Domain.Entities.UserEntities;
 using Infrastructure.Interfaces.Repositories;
 using Infrastructure.Persistence;
 
-namespace Application.Users.Repositories
+namespace Application.Repositories
 {
     public class TeacherRepository : Repository<Teacher>, ITeacherRepository
     {

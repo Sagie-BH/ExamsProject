@@ -1,0 +1,64 @@
+﻿@model TeacherMainViewModel
+
+
+<div class="col-10 mt-4">
+
+    <h1>@Model.TeacherName</h1>
+
+
+    <!--Icons - Create, Notification, My Tests... + 2-->
+    <div class="container-fluid col-8">
+        <div class="row text-center">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <a asp-action="CreateClassRoom">
+                    <img src="~/images/teacher/newClass.png" class="teacher-icons" />
+                    <h6>Create Class</h6>
+                </a>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4">
+
+                <img src="~/images/teacher/Create Test.png" class="teacher-icons" />
+                <h6>Create Exam</h6>
+            </div>
+            <div class="col-sm-12  col-md-4">
+
+                <img src="~/images/infoIcon.png" class="teacher-icons" />
+                <h6>Personal Info</h6>
+            </div>
+        </div>
+        <hr class="my-4">
+    </div>
+
+    <hr class="my-4">
+
+
+    <!--3 Columns - ClassRoom, Test Archive, ?OnGoing Test?-->
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+
+                <h3>Class Rooms</h3>
+                
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4">
+
+                <h3>Tests Archive</h3>
+
+            </div>
+            <div class="col-sm-12  col-md-4">
+
+                <h3>Grades</h3>
+
+            </div>
+        </div>
+        <hr class="my-4">
+    </div>
+
+
+</div>
+
+
+
+<link href="~/css/TeacherStyle.css" rel="stylesheet" />

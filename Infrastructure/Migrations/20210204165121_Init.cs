@@ -25,9 +25,9 @@ namespace Infrastructure.Migrations
                 name: "Teachers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     DateStarted = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MonthlySalary = table.Column<double>(type: "float(3)", precision: 3, scale: 2, nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
@@ -63,8 +63,9 @@ namespace Infrastructure.Migrations
                 name: "ClassRooms",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClassTeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClassTeacherId = table.Column<long>(type: "bigint", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -79,16 +80,17 @@ namespace Infrastructure.Migrations
                         column: x => x.ClassTeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Subjects",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TeacherId = table.Column<long>(type: "bigint", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -110,10 +112,11 @@ namespace Infrastructure.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     AvrageGrade = table.Column<double>(type: "float(3)", precision: 3, scale: 2, nullable: false),
-                    PersonalTeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ClassRoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PersonalTeacherId = table.Column<long>(type: "bigint", nullable: true),
+                    ClassRoomId = table.Column<long>(type: "bigint", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
@@ -140,8 +143,10 @@ namespace Infrastructure.Migrations
                 name: "Exams",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ExamSubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsPrivate = table.Column<bool>(type: "bit", nullable: false),
+                    ExamSubjectId = table.Column<long>(type: "bigint", nullable: true),
                     SuccessRate = table.Column<double>(type: "float(3)", precision: 3, scale: 2, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TestTimeLimit = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -166,9 +171,10 @@ namespace Infrastructure.Migrations
                 name: "Questions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Question = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SubjectId = table.Column<long>(type: "bigint", nullable: true),
                     QuestionCompleted = table.Column<bool>(type: "bit", nullable: true),
                     Tips = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Comments = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -198,8 +204,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StudentId = table.Column<long>(type: "bigint", nullable: true),
+                    TeacherId = table.Column<long>(type: "bigint", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -239,8 +245,8 @@ namespace Infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Notification = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    StudentId = table.Column<long>(type: "bigint", nullable: true),
+                    TeacherId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -263,11 +269,13 @@ namespace Infrastructure.Migrations
                 name: "FinishedExams",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     IsDone = table.Column<bool>(type: "bit", nullable: false),
                     Grade = table.Column<double>(type: "float(3)", precision: 3, scale: 2, nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ExamId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
+                    StudentId = table.Column<long>(type: "bigint", nullable: true),
+                    ExamId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -290,8 +298,8 @@ namespace Infrastructure.Migrations
                 name: "ExamQuestions",
                 columns: table => new
                 {
-                    ExamId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ExamId = table.Column<long>(type: "bigint", nullable: false),
+                    QuestionId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -314,10 +322,11 @@ namespace Infrastructure.Migrations
                 name: "QuestionOption",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     IsRightAnswer = table.Column<bool>(type: "bit", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    QuestionId = table.Column<long>(type: "bigint", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -472,8 +481,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ClassRooms_ClassTeacherId",
                 table: "ClassRooms",
-                column: "ClassTeacherId",
-                unique: true);
+                column: "ClassTeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExamQuestions_QuestionId",

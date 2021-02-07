@@ -4,7 +4,7 @@ using Infrastructure.Interfaces.Repositories;
 using Infrastructure.Persistence;
 
 
-namespace Application.Relational.Repositories
+namespace Application.Repositories
 {
     public class ClassRoomRepository : Repository<ClassRoom>, IClassRoomRepository
     {

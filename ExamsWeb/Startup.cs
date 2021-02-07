@@ -8,6 +8,10 @@ using Application.Services;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure.Persistence;
 using Infrastructure.Models;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace ExamsWeb
 {
@@ -22,6 +26,8 @@ namespace ExamsWeb
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+
             services.AddSqlServer(Configuration);
 
             services.AddInfrastructure();
@@ -35,7 +41,12 @@ namespace ExamsWeb
 
             }).AddEntityFrameworkStores<ExamsAppDbContext>();
 
-            services.AddControllersWithViews();
+
+            services.AddMvc(opt =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();   // Use Authentication for the all website
+                opt.Filters.Add(new AuthorizeFilter(policy));   // Adding new policy rule
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

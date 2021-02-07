@@ -8,6 +8,7 @@ namespace Domain.Entities.ObjectEntities
 {
     public class AppExam : DomainObject, IAggregateRoot
     {
+        public bool IsPrivate { get; set; }
         public Subject ExamSubject { get; set; }
 #nullable enable
         public double? SuccessRate { get; set; }

@@ -1,32 +1,33 @@
-﻿using Application.Interfaces;
-using Domain.Entities.UserEntities;
-using Domain.Models;
+﻿using Application.Services;
 using ExamsWeb.Models;
-using ExamsWeb.ViewModels.Account;
+using Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExamsWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<AppUser> userManager;
+        private readonly ISignInService signInService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(UserManager<AppUser> userManager, ISignInService signInService)
         {
-            _logger = logger;
+            this.userManager = userManager;
+            this.signInService = signInService;
         }
-
-        public IActionResult Index()
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            if(User.Identity.Name != null)
+            {
+                return await signInService.RedirectUserByEmail(User.Identity.Name);
+            }
+            return  View();
         }
 
         public IActionResult Privacy()

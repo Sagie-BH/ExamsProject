@@ -2,9 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Text;
-using Domain.Entities.ObjectEntities;
 
 namespace Infrastructure.Services
 {

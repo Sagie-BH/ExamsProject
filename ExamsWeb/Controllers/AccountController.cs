@@ -1,10 +1,12 @@
 ﻿using Domain.Entities.UserEntities;
 using Infrastructure.Models;
-using ExamsWeb.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.ViewModels.Account;
+using Application.Interfaces;
+using Application.Services;
 
 namespace ExamsWeb.Controllers
 {
@@ -12,11 +14,15 @@ namespace ExamsWeb.Controllers
     {
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
+        private readonly ISignInService signInService;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager,
+                                 SignInManager<AppUser> signInManager,
+                                 ISignInService signInService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.signInService = signInService;
         }
 
         [HttpGet]
@@ -25,6 +31,35 @@ namespace ExamsWeb.Controllers
         public IActionResult SignIn()
         {
             return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> SignIn(SignInViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(viewModel.Email, viewModel.Password, viewModel.RememberMe, false);
+
+                if (result.Succeeded)
+                {
+                    return await signInService.RedirectUserByEmail(viewModel.Email);
+
+                    //var user = await userManager.FindByNameAsync(viewModel.Email);
+
+                    //if (user.TeacherId != null)
+                    //{
+                    //    var teacherViewModel = await teacherService.GetTeacherViewModelById(user.TeacherId.Value);
+                    //    return RedirectToAction("Main", "Teacher", teacherViewModel);
+                    //}
+                    //else
+                    //{
+
+                    //    return RedirectToAction("Main", "Teacher", user.Student);
+                    //}
+                }
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+            }
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -41,12 +76,12 @@ namespace ExamsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new AppUser {
+                var user = new AppUser
+                {
                     UserName = viewModel.Email,
                     Email = viewModel.Email,
                     Teacher = new Teacher()
                     {
-                        MonthlySalary = 30000,
                         FirstName = viewModel.FirstName,
                         LastName = viewModel.LastName
                     }
@@ -61,7 +96,7 @@ namespace ExamsWeb.Controllers
                     //}
 
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Todo", "Todo", user);
+                    return RedirectToAction("Index", "Teacher", user);
                 }
                 foreach (var err in result.Errors)
                 {
@@ -76,7 +111,7 @@ namespace ExamsWeb.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("index", "home");
+            return RedirectToAction("Index", "Home");
         }
 
         [AcceptVerbs("Get", "Post")]

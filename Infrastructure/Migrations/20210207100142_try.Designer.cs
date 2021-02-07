@@ -4,35 +4,22 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ExamsAppDbContext))]
-    partial class ExamsAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210207100142_try")]
+    partial class @try
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
-
-            modelBuilder.Entity("ClassRoomSubject", b =>
-                {
-                    b.Property<long>("ClassRoomsId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("SubjectsId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ClassRoomsId", "SubjectsId");
-
-                    b.HasIndex("SubjectsId");
-
-                    b.ToTable("ClassRoomSubject");
-                });
 
             modelBuilder.Entity("Domain.Entities.FinishedExams", b =>
                 {
@@ -171,6 +158,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<long?>("ClassRoomId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -193,6 +183,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClassRoomId");
 
                     b.HasIndex("TeacherId");
 
@@ -593,21 +585,6 @@ namespace Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("AppUser");
                 });
 
-            modelBuilder.Entity("ClassRoomSubject", b =>
-                {
-                    b.HasOne("Domain.Entities.Relational.ClassRoom", null)
-                        .WithMany()
-                        .HasForeignKey("ClassRoomsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.ObjectEntities.Subject", null)
-                        .WithMany()
-                        .HasForeignKey("SubjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.FinishedExams", b =>
                 {
                     b.HasOne("Domain.Entities.ObjectEntities.AppExam", "Exam")
@@ -643,6 +620,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.Subject", b =>
                 {
+                    b.HasOne("Domain.Entities.Relational.ClassRoom", null)
+                        .WithMany("Subjects")
+                        .HasForeignKey("ClassRoomId");
+
                     b.HasOne("Domain.Entities.UserEntities.Teacher", null)
                         .WithMany("Subjects")
                         .HasForeignKey("TeacherId");
@@ -788,6 +769,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Relational.ClassRoom", b =>
                 {
                     b.Navigation("Students");
+
+                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserEntities.Student", b =>

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Users.Repositories
+namespace Application.Repositories
 {
     public class StudentRepository : Repository<Student>, IStudentRepository
     {

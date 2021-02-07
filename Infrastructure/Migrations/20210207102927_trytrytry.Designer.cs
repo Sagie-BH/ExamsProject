@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ExamsAppDbContext))]
-    [Migration("20210201153430_Init")]
-    partial class Init
+    [Migration("20210207102927_trytrytry")]
+    partial class trytrytry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,14 +21,33 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
+            modelBuilder.Entity("ClassRoomSubject", b =>
+                {
+                    b.Property<long>("ClassRoomsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SubjectsId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ClassRoomsId", "SubjectsId");
+
+                    b.HasIndex("SubjectsId");
+
+                    b.ToTable("ClassRoomSubject");
+                });
+
             modelBuilder.Entity("Domain.Entities.FinishedExams", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
-                    b.Property<Guid?>("ExamId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<long?>("ExamId")
+                        .HasColumnType("bigint");
 
                     b.Property<double>("Grade")
                         .HasPrecision(3, 2)
@@ -37,8 +56,8 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("StudentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("StudentId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -51,9 +70,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.AppExam", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -64,8 +84,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ExamSubjectId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("ExamSubjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
@@ -92,9 +115,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.QuestionObject", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
@@ -123,8 +147,8 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("QuestionTimeLimit")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("SubjectId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("SubjectId")
+                        .HasColumnType("bigint");
 
                     b.Property<double?>("SuccessRate")
                         .HasColumnType("float");
@@ -144,9 +168,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.Subject", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -163,8 +188,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TeacherId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("TeacherId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -178,12 +203,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Relational.ClassRoom", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
-                    b.Property<Guid>("ClassTeacherId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("ClassTeacherId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -202,19 +228,18 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassTeacherId")
-                        .IsUnique();
+                    b.HasIndex("ClassTeacherId");
 
                     b.ToTable("ClassRooms");
                 });
 
             modelBuilder.Entity("Domain.Entities.Relational.ExamQuestions", b =>
                 {
-                    b.Property<Guid>("ExamId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("ExamId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("QuestionId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("ExamId", "QuestionId");
 
@@ -225,9 +250,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.UserEntities.Student", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
                     b.Property<double>("AvrageGrade")
                         .HasPrecision(3, 2)
@@ -236,8 +262,8 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("ClassRoomId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("ClassRoomId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -248,8 +274,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PersonalTeacherId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("PersonalTeacherId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -262,9 +288,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.UserEntities.Teacher", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
@@ -281,10 +308,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("MonthlySalary")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("float(3)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Teachers");
@@ -292,9 +315,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.QuestionOption", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -311,8 +335,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("QuestionId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
@@ -337,11 +361,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Notification")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("StudentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("StudentId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid?>("TeacherId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("TeacherId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -554,21 +578,36 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Domain.Models.AppUser", b =>
+            modelBuilder.Entity("Infrastructure.Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<Guid?>("StudentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("StudentId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid?>("TeacherId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("TeacherId")
+                        .HasColumnType("bigint");
 
                     b.HasIndex("StudentId");
 
                     b.HasIndex("TeacherId");
 
                     b.HasDiscriminator().HasValue("AppUser");
+                });
+
+            modelBuilder.Entity("ClassRoomSubject", b =>
+                {
+                    b.HasOne("Domain.Entities.Relational.ClassRoom", null)
+                        .WithMany()
+                        .HasForeignKey("ClassRoomsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ObjectEntities.Subject", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.FinishedExams", b =>
@@ -614,10 +653,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Relational.ClassRoom", b =>
                 {
                     b.HasOne("Domain.Entities.UserEntities.Teacher", "ClassTeacher")
-                        .WithOne("PersonalClass")
-                        .HasForeignKey("Domain.Entities.Relational.ClassRoom", "ClassTeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("MyClasses")
+                        .HasForeignKey("ClassTeacherId");
 
                     b.Navigation("ClassTeacher");
                 });
@@ -723,7 +760,7 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Models.AppUser", b =>
+            modelBuilder.Entity("Infrastructure.Models.AppUser", b =>
                 {
                     b.HasOne("Domain.Entities.UserEntities.Student", "Student")
                         .WithMany()
@@ -764,9 +801,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.UserEntities.Teacher", b =>
                 {
-                    b.Navigation("Notifications");
+                    b.Navigation("MyClasses");
 
-                    b.Navigation("PersonalClass");
+                    b.Navigation("Notifications");
 
                     b.Navigation("Subjects");
                 });

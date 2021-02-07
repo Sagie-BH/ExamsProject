@@ -3,7 +3,7 @@ using Domain.Entities.ObjectEntities;
 using Infrastructure.Interfaces.Repositories;
 using Infrastructure.Persistence;
 
-namespace Application.Exams.Repositories
+namespace Application.Repositories
 {
     public class SubjectRepository : Repository<Subject>, ISubjectRepository
     {

@@ -1,8 +1,6 @@
 ﻿using Application.Common;
-using Application.Exams.Repositories;
 using Application.Interfaces;
-using Application.Relational.Repositories;
-using Application.Users.Repositories;
+using Application.Repositories;
 using Infrastructure.Interfaces.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +22,10 @@ namespace Application.Services
 
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ITeacherRepository, TeacherRepository>();
+
+            services.AddScoped<ITeacherService, TeacherService>();
+
+            services.AddScoped<ISignInService, SignInService>();
         }
 
     }

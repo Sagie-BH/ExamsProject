@@ -1,12 +1,8 @@
-﻿using Ardalis.EFCore.Extensions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Entities.ObjectEntities;
 using Domain.Entities.Relational;
 using Domain.Entities.UserEntities;
-using Domain.Models;
-using Infrastructure.Interfaces;
 using Infrastructure.Models;
-using Infrastructure.Persistence.Configuration;
 using Infrastructure.Persistence.Configuration.AppObjects;
 using Infrastructure.Persistence.Configuration.AppUsers;
 using Infrastructure.Persistence.Configuration.Relational;

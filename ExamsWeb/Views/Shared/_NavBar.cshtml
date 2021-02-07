@@ -6,11 +6,12 @@
     <div class="container-fluid">
         <a class="nav-brand" href="#"><img src="img/logo.png"> </a>
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ExamsWeb</a>
-        @*<button class="nav-bar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-            <span class="navbar-toggler-icon"></span>
-        </button>*@
+
+
         @if (signInManager.IsSignedIn(User))
         {
+            // Add Logout Warning 
+
             <form method="post" asp-controller="account" asp-action="logout">
                 <button type="submit" style="width:auto"class="nav-link btn btn-link py-0">
                     Logout @User.Identity.Name

@@ -1,0 +1,57 @@
+﻿@model CreateClassViewModel
+
+
+
+<div class="offset-2 col-md-9">
+    <form method="post">
+        <div class="form-group">
+            <label>Class Name</label>
+            <input asp-for="ClassName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <!--Subjects List Input Section-->
+            <h3>Subjects:</h3>
+            <div class="row">
+                <div class="col-3">
+                    <label>Title</label>
+                </div>
+                <div class="col-9">
+                    <label>Description..................</label>
+                </div>
+                <div id="subjectsSection">
+                    <div class="row" id="Subject0">
+                        <div class="col-3">
+                            <input asp-for="Subjects[0].Title" />
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Subjects[0].Description" class="DescriptionInputs" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="addSubjectBtn">Add Subject</button>
+
+        <hr class="my-4">
+
+        <!--Invitations List - Emails-->
+        <div class="offset-2 col-md-9">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Emails</th>
+                    </tr>
+                </thead>
+                <tbody id="invitationTable">
+                    <tr>
+                        <th scope="row"><a onclick="return addEmail()">Add</a></th>
+                        <td class="invitationsTd"><input type="email" id="invitationInput" asp-for="Invitations[0]" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<script src="~/js/teacherScript.js"></script>
+<link href="~/css/TeacherStyle.css" rel="stylesheet" />

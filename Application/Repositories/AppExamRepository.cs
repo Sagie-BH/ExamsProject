@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Exams.Repositories
+namespace Application.Repositories
 {
     public class AppExamRepository : Repository<AppExam>, IAppExamRepository
     {

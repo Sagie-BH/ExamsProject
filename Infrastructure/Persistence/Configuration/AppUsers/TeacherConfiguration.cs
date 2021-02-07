@@ -20,12 +20,9 @@ namespace Infrastructure.Persistence.Configuration.AppUsers
 
             builder.Property(t => t.DateStarted).IsRequired();
 
-            builder.Property(t => t.MonthlySalary)
-                    .HasPrecision(3, 2);
-
-            builder.HasOne(t => t.PersonalClass)
-                    .WithOne(cr => cr.ClassTeacher)
-                    .HasForeignKey<ClassRoom>(cr => cr.ClassTeacherId);
+            //builder.HasOne(t => t.PersonalClass)
+            //        .WithOne(cr => cr.ClassTeacher)
+            //        .HasForeignKey<ClassRoom>(cr => cr.ClassTeacherId);
 
         }
     }
