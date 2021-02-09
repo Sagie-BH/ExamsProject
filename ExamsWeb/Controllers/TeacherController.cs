@@ -1,4 +1,5 @@
-﻿using Application.ViewModels.Teacher;
+﻿using Application.Interfaces;
+using Application.ViewModels.Teacher;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,13 +11,32 @@ namespace ExamsWeb.Controllers
 {
     public class TeacherController : Controller
     {
+        private readonly ITeacherService teacherService;
+
+        public TeacherController(ITeacherService teacherService)
+        {
+            this.teacherService = teacherService;
+        }
         public IActionResult Main(TeacherMainViewModel viewModel)
         {
 
             return View(viewModel);
         }
-        public IActionResult CreateClassRoom()
+
+        [HttpGet]
+        public IActionResult CreateClassRoom(long teacherId)
         {
+            CreateClassViewModel viewModel = new CreateClassViewModel()
+            {
+                TeacherId = teacherId
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult CreateClassRoom(CreateClassViewModel viewModel)
+        {
+            var a = viewModel;
             return View();
         }
     }

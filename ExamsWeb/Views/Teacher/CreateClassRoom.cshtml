@@ -6,6 +6,7 @@
     <form method="post">
         <div class="form-group">
             <label>Class Name</label>
+            <input asp-for="TeacherId" hidden />
             <input asp-for="ClassName" class="form-control" />
         </div>
         <div class="form-group">
@@ -46,11 +47,12 @@
                 <tbody id="invitationTable">
                     <tr>
                         <th scope="row"><a onclick="return addEmail()">Add</a></th>
-                        <td class="invitationsTd"><input type="email" id="invitationInput" asp-for="Invitations[0]" /></td>
+                        <td class="invitationsTd"><input asp-for="Invitations[0]" id="invitationInput"/></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <button type="submit" class="btn btn-primary"></button>
     </form>
 </div>
 <script src="~/js/teacherScript.js"></script>

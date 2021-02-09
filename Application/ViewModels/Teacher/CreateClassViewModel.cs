@@ -9,10 +9,12 @@ namespace Application.ViewModels.Teacher
 {
     public class CreateClassViewModel
     {
+        public long TeacherId { get; set; }
+        public string TeacherName { get; set; }
         [Required]
         public string ClassName { get; set; }
         public List<Subject> Subjects { get; set; } 
-        [ValidateEmailListAnnotation]
+        //[ValidateEmailListAnnotation]
         public List<string> Invitations { get; set; }
     }
 }

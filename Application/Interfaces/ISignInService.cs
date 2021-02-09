@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Application.Services
+namespace Application.Interfaces
 {
     public interface ISignInService
     {

@@ -44,18 +44,6 @@ namespace ExamsWeb.Controllers
                 {
                     return await signInService.RedirectUserByEmail(viewModel.Email);
 
-                    //var user = await userManager.FindByNameAsync(viewModel.Email);
-
-                    //if (user.TeacherId != null)
-                    //{
-                    //    var teacherViewModel = await teacherService.GetTeacherViewModelById(user.TeacherId.Value);
-                    //    return RedirectToAction("Main", "Teacher", teacherViewModel);
-                    //}
-                    //else
-                    //{
-
-                    //    return RedirectToAction("Main", "Teacher", user.Student);
-                    //}
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
             }

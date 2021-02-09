@@ -5,7 +5,7 @@ const invitationInput = document.getElementById("invitationInput");
 const invitationTable = document.getElementById("invitationTable");
 
 let subjectCount = 1; 
-let emailCount = 1;
+let emailCount = 0;
 // Adding Subject title and description inputs
 
 addSubjectBtn.addEventListener("click", (e) => {
@@ -31,12 +31,14 @@ const removeSubject = (subjectToDelete) => {
 }
 
 const addEmail = () => {
-    let emailAddres = invitationInput.innerHTML;
+    let emailAddres = invitationInput.value;
     invitationTable.innerHTML += `<tr>
         <td>${emailCount}</td>
-        <td  class="invitationsTd">
-            <input readonly="readonly" name="Invitation[${emailCount}] value=${invitationInput.value}/>"
+        <td class="invitationsTd">
+            <input readonly="readonly" name="Invitation[${emailCount}]" id="Invitation[${emailCount}]"/>
         </td>
 </tr>`
+    document.getElementById(`Invitation[${emailCount}]`).value = emailAddres;
+    invitationInput.value = invitationInput.defaultValue;
     emailCount++;
 }

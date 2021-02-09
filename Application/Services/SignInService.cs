@@ -29,7 +29,7 @@ namespace Application.Services
             }
             else
             {
-
+                // Student
                 return RedirectToAction("Main", "Teacher", currentUser.Student);
             }
         }
