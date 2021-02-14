@@ -5,6 +5,7 @@ namespace Application.ViewModels.Teacher
 {
     public class TeacherMainViewModel
     {
+        public long TeacherId { get; set; }
         public string TeacherName { get; set; }
         public List<MyClassRoom> MyClasses { get; set; }
 

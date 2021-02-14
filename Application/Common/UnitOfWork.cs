@@ -1,10 +1,4 @@
 ﻿using Application.Interfaces;
-using Domain.Entities;
-using Domain.Entities.ObjectEntities;
-using Domain.Entities.Relational;
-using Domain.Entities.UserEntities;
-using Domain.Interfaces;
-using Infrastructure.Interfaces;
 using Infrastructure.Interfaces.Repositories;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore.Storage;

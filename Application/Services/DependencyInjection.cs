@@ -24,7 +24,6 @@ namespace Application.Services
             services.AddScoped<ITeacherRepository, TeacherRepository>();
 
             services.AddScoped<ITeacherService, TeacherService>();
-
             services.AddScoped<ISignInService, SignInService>();
         }
 
