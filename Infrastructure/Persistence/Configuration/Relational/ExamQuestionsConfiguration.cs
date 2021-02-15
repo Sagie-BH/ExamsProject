@@ -18,10 +18,10 @@ namespace Infrastructure.Persistence.Configuration.Relational
                     .HasForeignKey(eq => eq.ExamId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.HasOne(eq => eq.Question)
-                    .WithMany(q => q.Exams)
-                    .HasForeignKey(eq => eq.QuestionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+            //builder.HasOne(eq => eq.Question)
+            //        .WithMany(q => q.Exams)
+            //        .HasForeignKey(eq => eq.QuestionId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

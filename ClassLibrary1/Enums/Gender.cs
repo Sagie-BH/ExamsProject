@@ -7,5 +7,4 @@ namespace Domain.Enums
         Male,
         Female
     }
-
 }

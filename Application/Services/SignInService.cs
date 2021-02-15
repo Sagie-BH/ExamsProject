@@ -21,17 +21,20 @@ namespace Application.Services
         public async Task<IActionResult> RedirectUserByEmail(string userEmail)
         {
             var currentUser = await userManager.FindByNameAsync(userEmail);
-
-            if (currentUser.TeacherId != null)
+            if (currentUser != null)
             {
-                var teacherViewModel = await teacherService.GetTeacherViewModelById(currentUser.TeacherId.Value);
-                return RedirectToAction("Main", "Teacher", teacherViewModel);
+                if (currentUser.TeacherId != null)
+                {
+                    var teacherViewModel = await teacherService.GetTeacherViewModelById(currentUser.TeacherId.Value);
+                    return RedirectToAction("Main", "Teacher", teacherViewModel );
+                }
+                else
+                {
+                    // Student
+                    return RedirectToAction("Main", "Teacher", currentUser.Student);
+                }
             }
-            else
-            {
-                // Student
-                return RedirectToAction("Main", "Teacher", currentUser.Student);
-            }
+            else return RedirectToAction("SignIn", "Account");
         }
     }
 }

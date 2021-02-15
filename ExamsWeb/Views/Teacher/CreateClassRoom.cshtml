@@ -19,19 +19,18 @@
                 <div class="col-9">
                     <label>Description..................</label>
                 </div>
-                <div id="subjectsSection">
-                    <div class="row" id="Subject0">
-                        <div class="col-3">
-                            <input asp-for="Subjects[0].Title" />
-                        </div>
-                        <div class="col-8">
-                            <input asp-for="Subjects[0].Description" class="DescriptionInputs" />
-                        </div>
+                <div class="row">
+                    <div class="col-3">
+                        <input asp-for="Subject.Title" />
                     </div>
+                    <div class="col-8">
+                        <input asp-for="Subject.Description" id="DescriptionInput" />
+                    </div>
+                    <!--<a onclick="return removeSubject(Subject${subjectCount})" class="col-1">X</a>--> <!--Todo: Delete Icon + teacherscript-->
                 </div>
             </div>
         </div>
-        <button id="addSubjectBtn">Add Subject</button>
+        @*<button id="addSubjectBtn">Add Subject</button>*@
 
         <hr class="my-4">
 
@@ -44,11 +43,11 @@
                         <th scope="col">Emails</th>
                     </tr>
                 </thead>
+                <tr>
+                    <th scope="row"><a onclick="return addEmail()">Add</a></th>
+                    <td class="invitationsTd"><input asp-for="Invitations[0]" id="invitationInput" /></td>
+                </tr>
                 <tbody id="invitationTable">
-                    <tr>
-                        <th scope="row"><a onclick="return addEmail()">Add</a></th>
-                        <td class="invitationsTd"><input asp-for="Invitations[0]" id="invitationInput"/></td>
-                    </tr>
                 </tbody>
             </table>
         </div>

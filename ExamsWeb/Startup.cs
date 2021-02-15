@@ -26,18 +26,17 @@ namespace ExamsWeb
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();
-
             services.AddSqlServer(Configuration);
 
             services.AddInfrastructure();
 
-            services.AddIdentity<AppUser, IdentityRole>(options =>
+            services.AddIdentity<AppUser, IdentityRole>(config =>
             {
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 5;
+                config.Password.RequireDigit = false;
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequiredLength = 5;
+                //config.SignIn.RequireConfirmedEmail = true;
 
             }).AddEntityFrameworkStores<ExamsAppDbContext>();
 

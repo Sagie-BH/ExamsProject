@@ -12,23 +12,27 @@ namespace Application.Common
     public abstract class Repository<T> : IRepository<T> where T : class, IAggregateRoot
     {
         private readonly ExamsAppDbContext context;
-        private readonly DbSet<T> entities;
+        public DbSet<T> Entities;
         public List<Exception> RepositoryExceptions;
 
         public Repository(ExamsAppDbContext _context)
         {
             context = _context;
-            entities = context.Set<T>();
+            Entities = context.Set<T>();
         }
-
+        /// <summary>
+        /// Gets the entity without join tables - no including
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<T> GetByIdAsync(long id)
         {
-            return await entities.FindAsync(id);
+            return await Entities.FindAsync(id);
         }
 
         public IQueryable<T> GetAllAsync()
         {
-            return entities;
+            return Entities;
         }
 
         public async Task AddAsync(T entity)
@@ -39,7 +43,7 @@ namespace Application.Common
             }
             try
             {
-                await entities.AddAsync(entity);
+                await Entities.AddAsync(entity);
                 await context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -56,7 +60,7 @@ namespace Application.Common
             }
             try
             {
-                entities.Remove(entity);
+                Entities.Remove(entity);
                 await context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -71,7 +75,7 @@ namespace Application.Common
             {
                 RepositoryExceptions.Add(new ArgumentNullException($"{nameof(EditAsync)} entity must not be null"));
             }
-            T exist = await entities.FindAsync(key);
+            T exist = await Entities.FindAsync(key);
             if (exist != null)
             {
                 context.Entry(exist).CurrentValues.SetValues(entity);

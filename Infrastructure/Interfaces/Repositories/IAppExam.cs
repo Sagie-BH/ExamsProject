@@ -16,6 +16,5 @@ namespace Infrastructure.Interfaces.Repositories
     public interface IClassRoomRepository : IRepository<ClassRoom> { }
     public interface IFinishedExamsRepository : IRepository<FinishedExams> { }
     public interface IStudentRepository : IRepository<Student> { }
-    public interface ITeacherRepository : IRepository<Teacher> { }
     public interface INotificationsRepository : IRepository<UserNotification> { }
 }

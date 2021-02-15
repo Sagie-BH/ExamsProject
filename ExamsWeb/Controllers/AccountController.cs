@@ -15,14 +15,17 @@ namespace ExamsWeb.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
         private readonly ISignInService signInService;
+        private readonly IUnitOfWork unitOfWork;
 
         public AccountController(UserManager<AppUser> userManager,
                                  SignInManager<AppUser> signInManager,
-                                 ISignInService signInService)
+                                 ISignInService signInService,
+                                 IUnitOfWork unitOfWork)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.signInService = signInService;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -32,6 +35,7 @@ namespace ExamsWeb.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> SignIn(SignInViewModel viewModel)
@@ -64,6 +68,7 @@ namespace ExamsWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Move to services - teacher/student
                 var user = new AppUser
                 {
                     UserName = viewModel.Email,
@@ -83,8 +88,9 @@ namespace ExamsWeb.Controllers
                     //    return RedirectToAction("ListUsers", "Administration");
                     //}
 
+                    await unitOfWork.SaveChangesAsync();
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Teacher", user);
+                    return await signInService.RedirectUserByEmail(user.Email);
                 }
                 foreach (var err in result.Errors)
                 {

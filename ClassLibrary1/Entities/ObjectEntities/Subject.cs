@@ -8,8 +8,6 @@ namespace Domain.Entities.ObjectEntities
     public class Subject : DomainObject, IAggregateRoot
     {
         public string Description { get; set; }
-#nullable enable
-        public ICollection<ClassRoom>? ClassRooms { get; set; }
-#nullable disable
+
     }
 }

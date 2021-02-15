@@ -10,7 +10,7 @@
     <div class="container-fluid col-8">
         <div class="row text-center">
             <div class="col-xs-12 col-sm-6 col-md-4">
-                <a asp-action="CreateClassRoom" asp-route-teacherEmail="@Model.">
+                <a asp-action="CreateClassRoom" asp-route-teacherId="@Model.TeacherId">
                     <img src="~/images/teacher/newClass.png" class="teacher-icons" />
                     <h6>Create Class</h6>
                 </a>
@@ -39,7 +39,15 @@
             <div class="col-xs-12 col-sm-6 col-md-4">
 
                 <h3>Class Rooms</h3>
-                
+                @if (Model.MyClasses != null)
+                {
+                    @foreach (var classRoom in Model.MyClasses)
+                    {
+                        <h6>Title: @classRoom.ClassTitle</h6>
+                        <h6>Subjects: @classRoom.Subject</h6>
+                        <h6>Students: @classRoom.StudentCount</h6>
+                    }
+                }
             </div>
 
             <div class="col-xs-12 col-sm-6 col-md-4">

@@ -4,7 +4,7 @@ using System;
 
 namespace Domain.Models
 {
-    public abstract class DomainObject : AuditableEntity
+    public abstract class DomainObject
     {
         public long Id { get; private set; }
 #nullable enable

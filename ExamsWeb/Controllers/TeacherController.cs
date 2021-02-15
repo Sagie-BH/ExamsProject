@@ -12,32 +12,40 @@ namespace ExamsWeb.Controllers
     public class TeacherController : Controller
     {
         private readonly ITeacherService teacherService;
+        //private readonly ISignInService signInService;
 
         public TeacherController(ITeacherService teacherService)
         {
             this.teacherService = teacherService;
+            //this.signInService = signInService;
         }
-        public IActionResult Main(TeacherMainViewModel viewModel)
+        public async Task<IActionResult> Main(TeacherMainViewModel viewModel)
         {
-
+            viewModel.MyClasses = await teacherService.GetTeacherClasses(viewModel.TeacherId);
+            //if (string.IsNullOrEmpty(viewModel.TeacherName))
+            //    return RedirectToAction("SignIn", "Account");
             return View(viewModel);
         }
 
         [HttpGet]
         public IActionResult CreateClassRoom(long teacherId)
         {
-            CreateClassViewModel viewModel = new CreateClassViewModel()
+            var viewModel = new CreateClassViewModel()
             {
                 TeacherId = teacherId
             };
             return View(viewModel);
         }
-
         [HttpPost]
-        public IActionResult CreateClassRoom(CreateClassViewModel viewModel)
+        public async Task<IActionResult> CreateClassRoom(CreateClassViewModel viewModel)
         {
-            var a = viewModel;
-            return View();
+            if(!await teacherService.SaveNewClassRoom(viewModel))
+            {
+                var teacherViewModel = await teacherService.GetTeacherViewModelById(viewModel.TeacherId);
+                return RedirectToAction("Main","Teacher", teacherViewModel);
+            }
+            var a = teacherService.Exceptions;
+            return NotFound();
         }
     }
 }

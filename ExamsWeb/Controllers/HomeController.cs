@@ -17,6 +17,7 @@ namespace ExamsWeb.Controllers
         {
             this.signInService = signInService;
         }
+
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {

@@ -13,8 +13,9 @@ namespace Domain.Entities.ObjectEntities
 #nullable enable
         public double? SuccessRate { get; set; }
         public string? Description { get; set; }
-        public DateTime? TestTimeLimit { get; set; }
+        public TimeSpan? TestTimeLimit { get; set; }
         public ICollection<ExamQuestions>? Questions { get; set; }
+        public DateTime? DueTime { get; set; }
 #nullable disable
     }
 }

@@ -1,13 +1,8 @@
-﻿using Domain.Entities.ObjectEntities;
-using Domain.Entities.Relational;
-using Domain.Entities.UserEntities;
+﻿using Domain.Entities.UserEntities;
 using Domain.Enums;
-using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure.Persistence.Configuration.AppUsers
 {
@@ -15,10 +10,18 @@ namespace Infrastructure.Persistence.Configuration.AppUsers
     {
         public void Configure(EntityTypeBuilder<Teacher> builder)
         {
-
             builder.ToTable("Teachers");
 
             builder.Property(t => t.DateStarted).IsRequired();
+
+            builder.Property(t => t.FirstName).HasMaxLength(20).IsRequired();
+
+            builder.Property(t => t.LastName).HasMaxLength(40).IsRequired();
+
+            builder.Property(t => t.Gender)
+                   .HasConversion(gender => gender.ToString(),
+                        v => (Gender)Enum.Parse(typeof(Gender), v))
+                   .IsRequired();  
 
             //builder.HasOne(t => t.PersonalClass)
             //        .WithOne(cr => cr.ClassTeacher)

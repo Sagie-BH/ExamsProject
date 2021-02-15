@@ -11,8 +11,6 @@ namespace Domain.Entities.Relational
     {
         public Teacher ClassTeacher { get; set; }
         public ICollection<Student> Students { get; set; }
-#nullable enable
-        public ICollection<Subject>? Subjects { get; set; }
-#nullable disable
+        public Subject Subject { get; set; }
     }
 }

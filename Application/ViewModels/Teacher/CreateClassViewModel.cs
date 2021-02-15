@@ -13,7 +13,7 @@ namespace Application.ViewModels.Teacher
         public string TeacherName { get; set; }
         [Required]
         public string ClassName { get; set; }
-        public List<Subject> Subjects { get; set; } 
+        public Subject Subject { get; set; } 
         //[ValidateEmailListAnnotation]
         public List<string> Invitations { get; set; }
     }

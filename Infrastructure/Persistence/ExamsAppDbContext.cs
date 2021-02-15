@@ -13,12 +13,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
 {
-    public class ExamsAppDbContext : IdentityDbContext
+    public class ExamsAppDbContext : IdentityDbContext<AppUser>
     {
 
         public ExamsAppDbContext(DbContextOptions<ExamsAppDbContext> options) : base(options) { }
 
-        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<AppExam> Exams { get; set; }
         public DbSet<ClassRoom> ClassRooms { get; set; }
         public DbSet<QuestionObject> Questions { get; set; }
@@ -36,6 +35,7 @@ namespace Infrastructure.Persistence
             builder.ApplyConfiguration(new StudentExamsConfiguration());
             builder.ApplyConfiguration(new StudentConfiguration());
             builder.ApplyConfiguration(new ExamQuestionsConfiguration());
+            builder.ApplyConfiguration(new QuestionOptionConfiguration());
         }
     }
 }

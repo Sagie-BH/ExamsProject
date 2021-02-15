@@ -7,9 +7,8 @@ namespace Infrastructure.Models
     public class AppUser : IdentityUser
     {
         public Student Student { get; set; }
-        public virtual long? StudentId { get; set; }
+        public long? StudentId { get; set; }
         public Teacher Teacher { get; set; }
-        public virtual long? TeacherId { get; set; }
-
+        public long? TeacherId { get; set; }
     }
 }
