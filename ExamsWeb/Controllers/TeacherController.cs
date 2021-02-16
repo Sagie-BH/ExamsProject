@@ -12,12 +12,10 @@ namespace ExamsWeb.Controllers
     public class TeacherController : Controller
     {
         private readonly ITeacherService teacherService;
-        //private readonly ISignInService signInService;
 
         public TeacherController(ITeacherService teacherService)
         {
             this.teacherService = teacherService;
-            //this.signInService = signInService;
         }
         public async Task<IActionResult> Main(TeacherMainViewModel viewModel)
         {
@@ -46,6 +44,14 @@ namespace ExamsWeb.Controllers
             }
             var a = teacherService.Exceptions;
             return NotFound();
+        }
+        public IActionResult CreateExam(long teacherId)
+        {
+            var viewModel = new CreateExamViewModel()
+            {
+                TeacherId = teacherId
+            };
+            return View(viewModel);
         }
     }
 }

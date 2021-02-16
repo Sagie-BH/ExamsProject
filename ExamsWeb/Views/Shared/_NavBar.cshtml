@@ -3,35 +3,38 @@
 
 
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-    <div class="container-fluid">
-        <a class="nav-brand" href="#">@*<img src="img/logo.png">*@ </a>
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ExamsWeb</a>
+    <div class="d-flex justify-content-between p-1 col-12">
+        <section class="ml-5">
+            <a class="nav-brand" href="#">@*<img src="img/logo.png">*@ </a>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ExamsWeb</a>
+        </section>
 
+        <section>
+            @if (signInManager.IsSignedIn(User))
+            {
+                // Add Logout Warning
 
-        @if (signInManager.IsSignedIn(User))
-        {
-            // Add Logout Warning 
-
-            <form method="post" asp-controller="account" asp-action="logout">
-                <button type="submit" style="width:auto"class="nav-link btn btn-link py-0">
-                    Logout @User.Identity.Name
-                </button>
-            </form>
-        }
-        else
-        {
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a href="#dropdown-content" class="nav-link dropdown-toggle" data-toggle="collapse" role="button" aria-controls="dropdown-content" aria-expanded="false">Hello, Sign in</a>
-                        <div id="dropdown-content" class="collapse dropdown-menu">
-                            <a class="dropdown-item" asp-controller="Account" asp-action="SignIn">Sign In</a>
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        }
+                <form class="p-2" method="post" asp-controller="account" asp-action="logout">
+                    <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">
+                        Logout @User.Identity.Name
+                    </button>
+                </form>
+            }
+            else
+            {
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a href="#dropdown-content" class="nav-link dropdown-toggle" data-toggle="collapse" role="button" aria-controls="dropdown-content" aria-expanded="false">Hello, Sign in</a>
+                            <div id="dropdown-content" class="collapse dropdown-menu">
+                                <a class="dropdown-item" asp-controller="Account" asp-action="SignIn">Sign In</a>
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </section>
     </div>
 </nav>
 

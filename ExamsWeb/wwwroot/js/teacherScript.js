@@ -1,10 +1,8 @@
 ﻿//const addSubjectBtn = document.getElementById("addSubjectBtn");
 //const subjectsInput = document.getElementById("subjectsInput");
-const subjectsSection = document.getElementById("subjectsSection");
+//const subjectsSection = document.getElementById("subjectsSection");
 const invitationInput = document.getElementById("invitationInput");
 const invitationTable = document.getElementById("invitationTable");
-
-
 
 
 // Adding Subject title and description inputs

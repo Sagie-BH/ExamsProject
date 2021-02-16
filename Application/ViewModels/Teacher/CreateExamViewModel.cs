@@ -8,7 +8,14 @@ namespace Application.ViewModels.Teacher
 {
     public class CreateExamViewModel
     {
-        public string TeacherId { get; set; }
+        public long TeacherId { get; set; }
+        [Required]
+        [Display(Name = "Title")]
+        public string ExamTitle { get; set; }
+
+        [Display(Name = "Description")]
+        public string ExamDescription { get; set; }
         public ExamSettings Settings { get; set; }
+
     }
 }

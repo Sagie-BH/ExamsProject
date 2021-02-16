@@ -5,19 +5,19 @@
 <div class="offset-2 col-md-9">
     <form method="post">
         <div class="form-group">
-            <label>Class Name</label>
             <input asp-for="TeacherId" hidden />
+            <label asp-for="ClassName">Class Name</label>
             <input asp-for="ClassName" class="form-control" />
         </div>
         <div class="form-group">
             <!--Subjects List Input Section-->
             <h3>Subjects:</h3>
-            <div class="row">
+            <section id="subjectSection" class="row">
                 <div class="col-3">
-                    <label>Title</label>
+                    <label asp-for="Subject.Title">Title</label>
                 </div>
                 <div class="col-9">
-                    <label>Description..................</label>
+                    <label asp-for="Subject.Description">Description</label>
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -28,7 +28,7 @@
                     </div>
                     <!--<a onclick="return removeSubject(Subject${subjectCount})" class="col-1">X</a>--> <!--Todo: Delete Icon + teacherscript-->
                 </div>
-            </div>
+            </section>
         </div>
         @*<button id="addSubjectBtn">Add Subject</button>*@
 

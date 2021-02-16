@@ -1,0 +1,72 @@
+﻿@model CreateExamViewModel
+
+
+<form method="post" enctype="multipart/form-data">
+    <header class="mt-3">
+        <div class="row">
+            <label asp-for="ExamTitle" id="newExamTitleLbl"></label>
+            <input asp-for="ExamTitle" id="newExamTitleInput" />
+        </div>
+        <div class="row">
+            <label asp-for="ExamDescription" id="newExamDescriptionLbl"></label>
+            <input asp-for="ExamDescription" id="newExamDescriptionInput" />
+        </div>
+    </header>
+    <hr class="my-4">
+
+
+    <main class="row mt-2">
+        <!--Exam View-->
+        <div class="col-md-9 p-2">
+
+            <!--Input Box - 3 Options/Buttons - Add Text/Image/Quistion-->
+            <section id="questionInput" class="row d-flex justify-content-around">
+                <a class="col-md-4 d-flex flex-column">
+                        <img class="add-icons" src="~/images/teacher/add-text-icon.png" />
+                        <label class="addIconLbl">Add Text</label>
+                </a>
+                <a class="col-md-4 d-flex flex-column">
+                    <img class="add-icons" src="~/images/teacher/add-question-icon.png" />
+                    <label class="addIconLbl">Add Question</label>
+                </a>
+                <a class="col-md-4 d-flex flex-column">
+                    <img class="add-icons" src="~/images/teacher/add-image-icon.png" />
+                    <label class="addIconLbl">Add Image</label>
+                </a>
+            </section>
+
+        </div>
+
+
+
+        <section id="examSettingsSection" class="col-md-3 p-2">
+            <div class="d-flex justify-content-between">
+                <h5>Exam Settings</h5>
+                <img id="examSettingsIcon" src="~/images/settings-icon.png" />
+            </div>
+        <!--Exam Settings-->
+            <div class="mt-4">
+                <label asp-for="Settings.IsExamPrivate"></label>
+                <input asp-for="Settings.IsExamPrivate" />
+            </div>
+            <hr class="my-4">
+            <div>
+                <label asp-for="Settings.ExamDueDate"></label>
+                <input asp-for="Settings.ExamDueDate" />
+                <span asp-validation-for="Settings.ExamDueDate"></span>
+            </div>
+            <hr class="my-4">
+            <div>
+                <label asp-for="Settings.ExamTimeLimit"></label>
+                <input asp-for="Settings.ExamTimeLimit" />
+                <span asp-validation-for="Settings.ExamTimeLimit"></span>
+            </div>
+            <hr class="my-4">
+        </section>
+
+
+    </main>
+</form>
+
+
+<link href="~/css/TeacherStyle.css" rel="stylesheet" />
