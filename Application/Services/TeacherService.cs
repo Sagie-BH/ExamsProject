@@ -24,7 +24,7 @@ namespace Application.Services
 
         public async Task<TeacherMainViewModel> GetTeacherViewModelById(long teacherId)
         {
-            var teacher = await unitOfWork.Teachers.GetTeacherById(teacherId);
+            var teacher = await unitOfWork.Teachers.GetTeacherByIdAsync(teacherId);
             var teacherViewModel = new TeacherMainViewModel()
             {
                 TeacherName = teacher.ToString(),
@@ -35,7 +35,7 @@ namespace Application.Services
 
         public async Task<List<MyClassRoom>> GetTeacherClasses(long teacherId)
         {
-            var teacher = await unitOfWork.Teachers.GetTeacherById(teacherId);
+            var teacher = await unitOfWork.Teachers.GetTeacherByIdAsync(teacherId);
 
             var teacherClasses = new List<MyClassRoom>();
             if(teacher.MyClasses.Any())

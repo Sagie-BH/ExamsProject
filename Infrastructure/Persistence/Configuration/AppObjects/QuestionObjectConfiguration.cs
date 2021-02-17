@@ -6,9 +6,9 @@ using System;
 
 namespace Infrastructure.Persistence.Configuration.AppObjects
 {
-    public class QuestionOptionConfiguration : IEntityTypeConfiguration<QuestionOption>
+    public class QuestionObjectConfiguration : IEntityTypeConfiguration<QuestionObject>
     {
-        public void Configure(EntityTypeBuilder<QuestionOption> builder)
+        public void Configure(EntityTypeBuilder<QuestionObject> builder)
         {
             builder.Property(qo => qo.QuestionType)
                     .HasConversion(qt => qt.ToString(),

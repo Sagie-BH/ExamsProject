@@ -6,7 +6,7 @@ namespace Infrastructure.Interfaces.Repositories
 {
     public interface ITeacherRepository : IRepository<Teacher> 
     {
-        Task<Teacher> GetTeacherById(long id);
+        Task<Teacher> GetTeacherByIdAsync(long id);
 
     }
 }

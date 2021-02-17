@@ -8,14 +8,27 @@ namespace Application.ViewModels.Teacher
 {
     public class CreateExamViewModel
     {
+        public CreateExamViewModel()
+        {
+            Settings = new ExamSettings()
+            {
+                ExamDueDate = DateTime.Now.Date,
+                ExamTimeLimit = TimeSpan.Zero
+            };
+        }
+        public long ExamId { get; set; }
         public long TeacherId { get; set; }
-        [Required]
-        [Display(Name = "Title")]
-        public string ExamTitle { get; set; }
-
-        [Display(Name = "Description")]
-        public string ExamDescription { get; set; }
         public ExamSettings Settings { get; set; }
+        public List<ExamQuestion> Questions { get; set; }
+        public ExamHeader ExamHeader { get; set; }
 
+        //[Required]
+        //public string ExamTitle { get; set; }
+        //[Required]
+        //public string ExamDescription { get; set; }
+        //[Required]
+        //public string SubjectTitle { get; set; }
+        //[Required]
+        //public string SubjectDescription { get; set; }
     }
 }

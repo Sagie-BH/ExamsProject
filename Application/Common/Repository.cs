@@ -35,7 +35,7 @@ namespace Application.Common
             return Entities;
         }
 
-        public async Task AddAsync(T entity)
+        public async Task<int> AddAsync(T entity)
         {
             if (entity == null)
             {
@@ -44,15 +44,16 @@ namespace Application.Common
             try
             {
                 await Entities.AddAsync(entity);
-                await context.SaveChangesAsync();
+                return await context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 RepositoryExceptions.Add(new Exception($"{nameof(entity)} could not be saved: {ex.Message}"));
             }
+            return 0;
         }
 
-        public async Task DeleteAsync(T entity)
+        public async Task<int> DeleteAsync(T entity)
         {
             if (entity == null)
             {
@@ -61,28 +62,36 @@ namespace Application.Common
             try
             {
                 Entities.Remove(entity);
-                await context.SaveChangesAsync();
+                return await context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 RepositoryExceptions.Add(new Exception($"{nameof(entity)} could not be deleted: {ex.Message}"));
             }
+            return 0;
         }
 
-        public async Task EditAsync(T entity, object key)
+        public async Task<int> EditAsync(T entity, long id)
         {
             if (entity == null)
             {
                 RepositoryExceptions.Add(new ArgumentNullException($"{nameof(EditAsync)} entity must not be null"));
             }
-            T exist = await Entities.FindAsync(key);
+            T exist = await Entities.FindAsync(id);
             if (exist != null)
             {
                 context.Entry(exist).CurrentValues.SetValues(entity);
-                await context.SaveChangesAsync();
+                return await context.SaveChangesAsync();
             }
+            return 0;
         }
-
-
+        //public int GetCount(string property)
+        //{
+        //    return Entities.Count(x => x.GetType().GetProperty(property).GetValue(x).ToString() == property
+        //}
+        public int GetCount()
+        {
+            return Entities.Count();
+        }
     }
 }

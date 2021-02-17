@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ExamsAppDbContext))]
-    partial class ExamsAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210217103805_examQuestions")]
+    partial class examQuestions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,32 +51,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("FinishedExams");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ObjectEntities.AnswerOption", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("AnswerText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRightAnswer")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("QuestionObjectId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionObjectId");
-
-                    b.ToTable("AnswerOption");
                 });
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.AppExam", b =>
@@ -123,21 +99,17 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("AppExamId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Question")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("QuestionCompleted")
                         .HasColumnType("bit");
 
                     b.Property<long?>("QuestionSubjectId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("QuestionText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<TimeSpan?>("QuestionTimeLimit")
-                        .HasColumnType("time");
-
-                    b.Property<string>("QuestionType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("QuestionTimeLimit")
+                        .HasColumnType("datetime2");
 
                     b.Property<double?>("SuccessRate")
                         .HasColumnType("float");
@@ -152,6 +124,36 @@ namespace Infrastructure.Migrations
                     b.HasIndex("QuestionSubjectId");
 
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ObjectEntities.QuestionOption", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("IsRightAnswer")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("QuestionObjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("QuestionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionObjectId");
+
+                    b.ToTable("QuestionOption");
                 });
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.Subject", b =>
@@ -567,13 +569,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ObjectEntities.AnswerOption", b =>
-                {
-                    b.HasOne("Domain.Entities.ObjectEntities.QuestionObject", null)
-                        .WithMany("AnswerOptions")
-                        .HasForeignKey("QuestionObjectId");
-                });
-
             modelBuilder.Entity("Domain.Entities.ObjectEntities.AppExam", b =>
                 {
                     b.HasOne("Domain.Entities.ObjectEntities.Subject", "ExamSubject")
@@ -594,6 +589,13 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("QuestionSubjectId");
 
                     b.Navigation("QuestionSubject");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ObjectEntities.QuestionOption", b =>
+                {
+                    b.HasOne("Domain.Entities.ObjectEntities.QuestionObject", null)
+                        .WithMany("Options")
+                        .HasForeignKey("QuestionObjectId");
                 });
 
             modelBuilder.Entity("Domain.Entities.Relational.ClassRoom", b =>
@@ -726,7 +728,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.ObjectEntities.QuestionObject", b =>
                 {
-                    b.Navigation("AnswerOptions");
+                    b.Navigation("Options");
                 });
 
             modelBuilder.Entity("Domain.Entities.Relational.ClassRoom", b =>

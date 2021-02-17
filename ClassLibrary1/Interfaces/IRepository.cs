@@ -7,11 +7,12 @@ namespace Domain.Interfaces
     {
         // Todo Change void Tasks!
 
-        Task AddAsync(TEntity entity);
-        Task EditAsync(TEntity entity, object key);
-        Task DeleteAsync(TEntity entity);
-        Task<TEntity> GetByIdAsync(long id);
+        Task<int> AddAsync(TEntity entity);
+        Task<int> DeleteAsync(TEntity entity);
+        Task<int> EditAsync(TEntity entity, long id);
         IQueryable<TEntity> GetAllAsync();
+        Task<TEntity> GetByIdAsync(long id);
+        int GetCount();
 
         //Task<List<T>> ListAsync<T>(ISpecification<T> spec)
 

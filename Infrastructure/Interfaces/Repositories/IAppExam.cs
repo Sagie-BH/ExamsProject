@@ -10,7 +10,6 @@ using System.Text;
 
 namespace Infrastructure.Interfaces.Repositories
 {
-    public interface IAppExamRepository : IRepository<AppExam> { }
     public interface IQuestionObjectRepository : IRepository<QuestionObject> { }
     public interface ISubjectRepository : IRepository<Subject> { }
     public interface IClassRoomRepository : IRepository<ClassRoom> { }

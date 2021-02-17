@@ -18,7 +18,7 @@ namespace Application.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Teacher> GetTeacherById(long id)
+        public async Task<Teacher> GetTeacherByIdAsync(long id)
         {
             return await Entities.Include(t => t.MyClasses).ThenInclude(c => c.Subject)
                 .Include(t => t.MyClasses).ThenInclude(c => c.Students)

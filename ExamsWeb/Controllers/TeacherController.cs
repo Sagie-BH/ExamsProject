@@ -20,8 +20,7 @@ namespace ExamsWeb.Controllers
         public async Task<IActionResult> Main(TeacherMainViewModel viewModel)
         {
             viewModel.MyClasses = await teacherService.GetTeacherClasses(viewModel.TeacherId);
-            //if (string.IsNullOrEmpty(viewModel.TeacherName))
-            //    return RedirectToAction("SignIn", "Account");
+
             return View(viewModel);
         }
 

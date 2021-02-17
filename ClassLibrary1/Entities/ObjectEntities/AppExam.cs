@@ -14,7 +14,7 @@ namespace Domain.Entities.ObjectEntities
         public double? SuccessRate { get; set; }
         public string? Description { get; set; }
         public TimeSpan? TestTimeLimit { get; set; }
-        public ICollection<ExamQuestions>? Questions { get; set; }
+        public ICollection<QuestionObject>? Questions { get; set; }
         public ICollection<ExamText>? ExamText { get; set; }
         public ICollection<ExamImage>? ExamImages { get; set; }
         public DateTime? DueTime { get; set; }
