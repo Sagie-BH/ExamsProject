@@ -23,10 +23,6 @@ namespace Infrastructure.Persistence.Configuration.AppUsers
                         v => (Gender)Enum.Parse(typeof(Gender), v))
                    .IsRequired();  
 
-            //builder.HasOne(t => t.PersonalClass)
-            //        .WithOne(cr => cr.ClassTeacher)
-            //        .HasForeignKey<ClassRoom>(cr => cr.ClassTeacherId);
-
         }
     }
 }

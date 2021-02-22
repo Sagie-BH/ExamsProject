@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,5 +8,11 @@ namespace Domain.Models
     public class ExamText : DomainObject
     {
         public string Text { get; set; }
+        public string Color { get; set; }
+        public int FontSize { get; set; }
+        public Alignment Alignment { get; set; }
+        public bool Bold { get; set; }
+        public bool Underlined { get; set; }
+        public bool Italic { get; set; }
     }
 }

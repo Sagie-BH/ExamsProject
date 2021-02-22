@@ -6,11 +6,26 @@ namespace Domain.Interfaces
     public interface IRepository<TEntity> where TEntity : IAggregateRoot
     {
         // Todo Change void Tasks!
-
-        Task<int> AddAsync(TEntity entity);
+        /// <summary>
+        /// Adding entity to database async
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns>Entity Id if succeeded. Return 0 if fails</returns>
+        Task<long> AddAsync(TEntity entity);
         Task<int> DeleteAsync(TEntity entity);
+        /// <summary>
+        /// Edit entity async 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="id"></param>
+        /// <returns>Return number of changes made to database</returns>
         Task<int> EditAsync(TEntity entity, long id);
         IQueryable<TEntity> GetAllAsync();
+        /// <summary>
+        /// Gets the entity without join tables - no including
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<TEntity> GetByIdAsync(long id);
         int GetCount();
 

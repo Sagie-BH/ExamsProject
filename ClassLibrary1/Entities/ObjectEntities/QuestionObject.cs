@@ -8,7 +8,7 @@ namespace Domain.Entities.ObjectEntities
 {
     public class QuestionObject : DomainObject, IAggregateRoot
     {
-        public string QuestionText { get; set; }
+        public ExamText QuestionText { get; set; }
         public Subject QuestionSubject { get; set; }
         public QuestionType QuestionType { get; set; }
 

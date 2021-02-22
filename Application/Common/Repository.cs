@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Application.Common
 {
     public abstract class Repository<T> : IRepository<T> where T : class, IAggregateRoot
     {
-        private readonly ExamsAppDbContext context;
+        protected ExamsAppDbContext context;
         public DbSet<T> Entities;
         public List<Exception> RepositoryExceptions;
 
@@ -20,11 +21,14 @@ namespace Application.Common
             context = _context;
             Entities = context.Set<T>();
         }
-        /// <summary>
-        /// Gets the entity without join tables - no including
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        public long GetKey(T entity)
+        {
+            var keyName = context.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties
+                .Select(x => x.Name).Single();
+
+            return (long)entity.GetType().GetProperty(keyName).GetValue(entity, null);
+        }
+
         public async Task<T> GetByIdAsync(long id)
         {
             return await Entities.FindAsync(id);
@@ -35,7 +39,7 @@ namespace Application.Common
             return Entities;
         }
 
-        public async Task<int> AddAsync(T entity)
+        public async Task<long> AddAsync(T entity)
         {
             if (entity == null)
             {
@@ -44,7 +48,10 @@ namespace Application.Common
             try
             {
                 await Entities.AddAsync(entity);
-                return await context.SaveChangesAsync();
+                if(await context.SaveChangesAsync() > 0)
+                {
+                    return GetKey(entity);
+                }
             }
             catch (Exception ex)
             {
@@ -70,7 +77,6 @@ namespace Application.Common
             }
             return 0;
         }
-
         public async Task<int> EditAsync(T entity, long id)
         {
             if (entity == null)
@@ -85,10 +91,8 @@ namespace Application.Common
             }
             return 0;
         }
-        //public int GetCount(string property)
-        //{
-        //    return Entities.Count(x => x.GetType().GetProperty(property).GetValue(x).ToString() == property
-        //}
+
+
         public int GetCount()
         {
             return Entities.Count();

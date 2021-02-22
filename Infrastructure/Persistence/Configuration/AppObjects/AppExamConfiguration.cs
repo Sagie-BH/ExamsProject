@@ -1,6 +1,5 @@
 ﻿using Domain.Entities.ObjectEntities;
 using Domain.Entities.Relational;
-using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;

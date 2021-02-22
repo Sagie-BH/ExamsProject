@@ -1,4 +1,4 @@
-﻿namespace Application.Data.Teacher
+﻿namespace Application.Data.Teacher.Exam
 {
     public class ExamAnswer
     {

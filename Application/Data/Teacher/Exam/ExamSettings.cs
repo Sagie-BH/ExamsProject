@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Application.Data.Teacher
+namespace Application.Data.Teacher.Exam
 {
     public class ExamSettings
     {

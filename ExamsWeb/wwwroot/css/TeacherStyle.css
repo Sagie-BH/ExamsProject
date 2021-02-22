@@ -1,24 +1,74 @@
 ﻿.teacher-icons {
     width: 70px
 }
+
 #subjectsSection {
     width: 100%;
 }
+
 .DescriptionInputs {
     width: 100%;
 }
+
 .invitationsTd {
     padding: 0;
 }
+
 #invitationInput {
     width: 100%;
 }
+
 .add-icons {
     width: 35px;
 }
+
 #examSettingsIcon {
     width: 25px;
 }
-.addIconLbl{
-    
+
+.addIconLbl {
+}
+
+#examHeader {
+    display: none;
+}
+
+#questionSection {
+    border-style: solid;
+}
+
+#textAreaInput {
+    width: 100%;
+}
+
+#textFontSizeInput {
+    width: 55px;
+}
+
+.checkBoxIcon {
+    height: 18px;
+    transform: translateY(2px);
+}
+
+    .checkBoxIcon :hover {
+        border: 1px solid rgb(208, 208, 208);
+        background-color: rgb(239, 239, 239);
+        box-shadow: 0.4px 0.4px 1px;
+    }
+
+.image-checkbox {
+    transform: translateY(-5px);
+    width: 25px;
+}
+.pushIcon {
+    border: 1px solid #949393;
+    border-radius: 10px;
+    background-color: #e8e8e8;
+    box-shadow: 0.8px 0.8px 1px;
+}
+.unpushIcon {
+    border: none;
+    border-radius: 0;
+    background-color: white;
+    box-shadow: none;
 }

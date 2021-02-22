@@ -8,6 +8,7 @@ namespace Domain.Models
     {
         public string ImagePath { get; set; }
 #nullable enable
+        public ExamText? ImageText { get; set; }
         public string? Desctiption { get; set; }
 #nullable disable
     }

@@ -1,4 +1,5 @@
 ﻿using Application.Data.Teacher;
+using Application.Data.Teacher.Exam;
 using Application.Interfaces;
 using Application.ViewModels.Teacher;
 using Domain.Entities.ObjectEntities;
@@ -18,30 +19,17 @@ namespace Application.Services
         {
             this.unitOfWork = unitOfWork;
         }
-        /// <summary>
-        /// Edits Title, Description & Subject. Returns 0 if fails.
-        /// </summary>
-        /// <param name="examId"></param>
-        /// <param name="examHeader"></param>
-        /// <returns></returns>
-        public async Task<int> EditExamHeader(long examId, ExamHeader examHeader)
+
+        public ExamViewModel GetNewExamViewModel(long teacherId)
         {
-            var exam = await unitOfWork.Exams.GetFullExamByIdAsync(examId);
-            exam.Title = examHeader.ExamTitle;
-            exam.Description = examHeader.ExamDescription;
-            exam.ExamSubject.Title = examHeader.SubjectTitle;
-            exam.ExamSubject.Description = exam.Description;
-            return await unitOfWork.Exams.EditAsync(exam, examId);
-        }
-        public CreateExamViewModel GetNewExamViewModel(long teacherId)
-        {
-            return new CreateExamViewModel()
+            return new ExamViewModel()
             {
                 TeacherId = teacherId,
                 ExamId = unitOfWork.Exams.GetCount() + 1
             };
         }
-        public async Task<CreateExamViewModel> GetExamViewModelById(long examId)
+
+        public async Task<ExamViewModel> GetExamViewModelById(long examId)
         {
             var exam = await unitOfWork.Exams.GetFullExamByIdAsync(examId);
             var questionList = new List<ExamQuestion>();
@@ -67,7 +55,7 @@ namespace Application.Services
                 });
             }
 
-            return new CreateExamViewModel()
+            return new ExamViewModel()
             {
                 ExamId = exam.Id,
                 ExamHeader = new ExamHeader()
@@ -79,7 +67,7 @@ namespace Application.Services
                 },
                 Settings = new ExamSettings()
                 {
-                    IsExamPrivate = exam.IsPrivate,
+                    IsExamPrivate = exam.IsPrivate.HasValue,
                     ExamDueDate = exam.DueTime.Value,
                     ExamTimeLimit = exam.TestTimeLimit
                 },
@@ -87,20 +75,24 @@ namespace Application.Services
             };
         }
 
-        //public async Task<CreateExamViewModel> AddExamHeader(long examId, string title, string description)
+        //public async Task<bool> EditExamHeader(ExamViewModel viewModel)
         //{
-        //    var exam = await unitOfWork.Exams.GetByIdAsync(examId);
-        //    if (exam != null)
+        //    var exam = await unitOfWork.Exams.GetFullExamByIdAsync(viewModel.ExamId);
+        //    if (exam == null)
         //    {
-        //        exam.Title = title;
-        //        exam.Description = description;
-
-        //        if (await unitOfWork.Exams.EditAsync(exam, examId) > 0)
-        //        {
-
-        //        }
+        //        exam = await unitOfWork.Exams.CreateNewExamAsync();
         //    }
+        //    var newSubjectId = await unitOfWork.Subjects.AddAsync(new Subject()
+        //    {
+        //        Title = viewModel.ExamHeader.SubjectTitle,
+        //        Description = viewModel.ExamHeader.SubjectDescription
+        //    });
+        //    exam.Title = viewModel.ExamHeader.ExamTitle;
+        //    exam.Description = viewModel.ExamHeader.ExamDescription;
+        //    exam.ExamSubject = await unitOfWork.Subjects.GetByIdAsync(newSubjectId);
 
+        //    return await unitOfWork.Exams.EditAsync(exam, exam.Id) > 0;
         //}
+
     }
 }

@@ -46,7 +46,7 @@ namespace ExamsWeb.Controllers
         }
         public IActionResult CreateExam(long teacherId)
         {
-            var viewModel = new CreateExamViewModel()
+            var viewModel = new ExamViewModel()
             {
                 TeacherId = teacherId
             };

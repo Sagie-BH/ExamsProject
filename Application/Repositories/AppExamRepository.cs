@@ -1,5 +1,6 @@
 ﻿using Application.Common;
 using Domain.Entities.ObjectEntities;
+using Domain.Models;
 using Infrastructure.Interfaces.Repositories;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +16,6 @@ namespace Application.Repositories
     {
         public AppExamRepository(ExamsAppDbContext context) : base(context) { }
 
-        /// <summary>
-        /// Gets Exam with all inputs & Questions & Answer Options..
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public async Task<AppExam> GetFullExamByIdAsync(long id)
         {
             return await Entities
@@ -27,12 +23,30 @@ namespace Application.Repositories
                 .Include(a => a.ExamSubject)
                 .Include(a => a.ExamText)
                 .Include(a => a.Questions).ThenInclude(q => q.QuestionText)
-                .Include(a => a.Questions).ThenInclude(q => q.QuestionTimeLimit)
-                .Include(a => a.Questions).ThenInclude(q => q.QuestionSubject).ThenInclude(s => s.Title)
-                .Include(a => a.Questions).ThenInclude(q => q.QuestionSubject).ThenInclude(s => s.Description)
-                .Include(a => a.Questions).ThenInclude(q => q.AnswerOptions).ThenInclude(a => a.IsRightAnswer)
-                .Include(a => a.Questions).ThenInclude(q => q.AnswerOptions).ThenInclude(a => a.AnswerText)
+                .Include(a => a.Questions).ThenInclude(q => q.QuestionSubject)
+                .Include(a => a.Questions).ThenInclude(q => q.AnswerOptions)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
+
+
+        //public async Task<AppExam> CreateNewExamAsync()
+        //{
+
+        //    var entity = new AppExam();
+
+        //    try
+        //    {
+        //        await Entities.AddAsync(entity);
+        //        if (await context.SaveChangesAsync() > 0)
+        //        {
+        //            return await Entities.FindAsync(GetKey(entity));
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        RepositoryExceptions.Add(new Exception($"{nameof(entity)} could not be created: {ex.Message}"));
+        //    }
+        //    return null;
+        //}
     }
 }

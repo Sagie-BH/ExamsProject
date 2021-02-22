@@ -6,7 +6,7 @@ namespace Domain.Models
 {
     public abstract class DomainObject
     {
-        public long Id { get; private set; }
+        public long Id { get; set; }
 #nullable enable
         public string? Title { get; set; }
 #nullable disable

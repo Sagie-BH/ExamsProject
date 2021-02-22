@@ -1,4 +1,8 @@
 ﻿using Application.Data.Teacher;
+using Application.Data.Teacher.Dtos;
+using Application.Data.Teacher.Exam;
+using Domain.Enums;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,9 +10,9 @@ using System.Text;
 
 namespace Application.ViewModels.Teacher
 {
-    public class CreateExamViewModel
+    public class ExamViewModel
     {
-        public CreateExamViewModel()
+        public ExamViewModel()
         {
             Settings = new ExamSettings()
             {
@@ -18,17 +22,11 @@ namespace Application.ViewModels.Teacher
         }
         public long ExamId { get; set; }
         public long TeacherId { get; set; }
+        public Alignment Alignment { get; set; }
+        public ExamHeader ExamHeader { get; set; }
         public ExamSettings Settings { get; set; }
         public List<ExamQuestion> Questions { get; set; }
-        public ExamHeader ExamHeader { get; set; }
-
-        //[Required]
-        //public string ExamTitle { get; set; }
-        //[Required]
-        //public string ExamDescription { get; set; }
-        //[Required]
-        //public string SubjectTitle { get; set; }
-        //[Required]
-        //public string SubjectDescription { get; set; }
+        public List<ExamTextDto> ExamTexts { get; set; }
+        public List<ExamImage> ExamImages { get; set; }
     }
 }

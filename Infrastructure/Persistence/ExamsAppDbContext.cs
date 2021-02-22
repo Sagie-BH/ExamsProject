@@ -35,7 +35,7 @@ namespace Infrastructure.Persistence
             builder.ApplyConfiguration(new StudentExamsConfiguration());
             builder.ApplyConfiguration(new StudentConfiguration());
             builder.ApplyConfiguration(new QuestionObjectConfiguration());
-            //builder.ApplyConfiguration(new ExamQuestionsConfiguration());
+            builder.ApplyConfiguration(new ExamTextConfiguration());
         }
     }
 }

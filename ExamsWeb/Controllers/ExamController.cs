@@ -17,14 +17,15 @@ namespace ExamsWeb.Controllers
             this.examService = examService;
         }
         [HttpGet]
+        public IActionResult Exam(ExamViewModel examViewModel)
+        {
+            return View(examViewModel);
+        }
+        [HttpGet]
         public IActionResult CreateExam(long teacherId)
         {
-            return View(examService.GetNewExamViewModel(teacherId));
+            return RedirectToAction("Exam", examService.GetNewExamViewModel(teacherId));
         }
-        public IActionResult SaveHeader(CreateExamViewModel viewModel)
-        {
-            var a = viewModel;
-            return View();
-        }
+
     }
 }
