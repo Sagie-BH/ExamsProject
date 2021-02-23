@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Application.Data.Teacher.Exam
 {
-    public class ExamQuestion
+    public class ExamQuestionDto
     {
         public ExamText QuestionText { get; set; }
         public QuestionType QuestionType { get; set; }

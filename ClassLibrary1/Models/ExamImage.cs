@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +11,7 @@ namespace Domain.Models
 #nullable enable
         public ExamText? ImageText { get; set; }
         public string? Desctiption { get; set; }
+        public Alignment Alignment { get; set; }
 #nullable disable
     }
 }

@@ -32,7 +32,7 @@ namespace Application.Services
         public async Task<ExamViewModel> GetExamViewModelById(long examId)
         {
             var exam = await unitOfWork.Exams.GetFullExamByIdAsync(examId);
-            var questionList = new List<ExamQuestion>();
+            var questionList = new List<ExamQuestionDto>();
 
             foreach (var question in exam.Questions)
             {
@@ -46,7 +46,7 @@ namespace Application.Services
                         AnswerText = option.AnswerText
                     });
                 }
-                questionList.Add(new ExamQuestion()
+                questionList.Add(new ExamQuestionDto()
                 {
                     QuestionText = question.QuestionText,
                     QuestionType = question.QuestionType,

@@ -1,0 +1,45 @@
+﻿@model ExamTextDto
+
+@{
+    string size = Model.FontSize.ToString() + "px";
+    string alignment = "";
+    switch (Model.Alignment)
+    {
+        case Alignment.Left:
+            alignment = "Left";
+            break;
+        case Alignment.Center:
+            alignment = "Center";
+            break;
+        case Alignment.Right:
+            alignment = "Right";
+            break;
+        default:
+            alignment = "Left";
+            break;
+    }
+    string bold = "";
+    if (Model.Bold)
+        bold = "bold";
+    else bold = "none";
+
+    string italic = "";
+    if (Model.Italic)
+        italic = "italic";
+    else italic = "normal";
+
+    string underline = "";
+    if (Model.Underlined)
+        underline = "underline";
+    else underline = "none";
+}
+
+<label style="width: 100%;
+            color: @Model.Color;
+            font-size: @size;
+            text-align: @alignment;
+            font-weight: @bold;
+            font-style: @italic;
+            text-decoration: @underline">
+    @Model.Text
+</label>

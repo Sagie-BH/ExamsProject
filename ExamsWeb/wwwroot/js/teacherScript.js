@@ -42,7 +42,7 @@ const addEmail = () => {
             <input readonly="readonly" name="Invitation[${emailCount}]" id="Invitation[${emailCount}]"/>
         </td>
     </tr>`
-    invitationTable.insertAdjacentHTML('afterbegin', invitationHTML)
+    invitationTable.insertAdjacentHTML('afterbegin', invitationHTML);
     document.getElementById(`Invitation[${emailCount}]`).value = emailAddres;
     invitationInput.value = "";
     emailCount++;

@@ -46,6 +46,9 @@ namespace ExamsWeb
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();   // Use Authentication for the all website
                 opt.Filters.Add(new AuthorizeFilter(policy));   // Adding new policy rule
             });
+
+            services.AddControllers().AddNewtonsoftJson();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

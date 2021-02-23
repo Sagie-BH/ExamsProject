@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Data.Teacher.Dtos;
+using Application.Interfaces;
 using Application.ViewModels.Teacher;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,6 +27,10 @@ namespace ExamsWeb.Controllers
         {
             return RedirectToAction("Exam", examService.GetNewExamViewModel(teacherId));
         }
-
+        [HttpPost]
+        public IActionResult AddTextInput([FromBody]ExamTextDto examText)
+        {
+            return PartialView("_TextInputTemplate", examText);
+        }
     }
 }

@@ -1,10 +1,5 @@
 ﻿const headerForm = document.getElementById("headerForm");
 
-const examTitleInput = document.getElementById("examTitleInput");
-const examDescriptionInput = document.getElementById("examDescriptionInput");
-const examSubTitleInput = document.getElementById("examSubTitleInput");
-const examSubDescriptionInput = document.getElementById("examSubDescriptionInput");
-
 const saveExamHeaderBtn = document.getElementById("saveExamHeaderBtn");
 
 const examHeader = document.getElementById("examHeader");
@@ -28,10 +23,16 @@ const ChangeHeaderSection = () => {
 
 // Save Input Values To Labels
 const SaveInputsToHeader = () => {
-    document.getElementById("examTitleLbl").innerText = examTitleInput.value;
-    document.getElementById("examDescriptionLbl").innerText = examDescriptionInput.value;
-    document.getElementById("examSubjectTitleLbl").innerText = examSubTitleInput.value;
-    document.getElementById("examSubjectDescriptionLbl").innerText = examSubDescriptionInput.value;
+    let examHeader = new ExamHeader();
+    examHeader.title = document.getElementById("examTitleInput").value
+    document.getElementById("examTitleLbl").innerText = document.getElementById("examTitleInput").value;
+    examHeader.description = document.getElementById("examDescriptionInput").value;
+    document.getElementById("examDescriptionLbl").innerText = document.getElementById("examDescriptionInput").value;
+    examHeader.subjectTitle = document.getElementById("examSubTitleInput").value;
+    document.getElementById("examSubjectTitleLbl").innerText = document.getElementById("examSubTitleInput").value;
+    examHeader.subjectDescription = document.getElementById("examSubDescriptionInput").value;
+    document.getElementById("examSubjectDescriptionLbl").innerText = document.getElementById("examSubDescriptionInput").value;
+    localStorage.setItem('ExamHeader', JSON.stringify(examHeader));
 }
 
 // Icon Checkbox Push Event
@@ -56,6 +57,8 @@ const textBold = (cb) => {
     }
     CheckedBoxEvent(cb);
 }
+
+
 // Italic Text
 const textItalic = (cb) => {
     if (cb.checked) {
@@ -98,4 +101,43 @@ const setAlignment = (alignment) => {
             textAreaInput.style.textAlign = "Right";
             break;
     }
+}
+
+
+// Save Text Input
+document.getElementById("textInputBtn").addEventListener('click', (e) => {
+    e.preventDefault();
+    let examTextInput = new ExamTextInput();
+    examTextInput.Text = document.getElementById("textAreaInput").value;
+    examTextInput.Color = document.getElementById("textColorPicker").value;
+    examTextInput.FontSize = document.getElementById("textFontSizeInput").value;
+    examTextInput.Alignment = document.getElementById("orientationSelect").value;
+    examTextInput.Bold = document.getElementById("textBoldInput").value;
+    examTextInput.Underline = document.getElementById("textUnderlineInput").value;
+    examTextInput.Italic = document.getElementById("textItalicInput").value;
+    //sessionStorage.setItem("textInput", JSON.stringify(examTextInput));
+
+    // Add Text Input To Template
+    $.ajax({
+        type: "POST",
+        url: 'AddTextInput/',
+        data: JSON.stringify(examTextInput),
+        dataType: "html",
+        contentType: "application/json; charset=utf-8",
+        success: (data, err) => {
+            console.log(data);
+            console.log(err);
+            document.getElementById("examInputSection").insertAdjacentHTML('afterbegin', data);
+            document.getElementById("textInputForm").style.display = "none";
+        },
+        error: (data, err) => {
+            console.log(data);
+            console.log(err);
+        }
+    });
+});
+
+
+const showTextInput = () => {
+    document.getElementById("textInputForm").style.display = "block";
 }
