@@ -8,15 +8,17 @@ namespace Domain.Entities.ObjectEntities
 {
     public class QuestionObject : DomainObject, IAggregateRoot
     {
+        public QuestionObject()
+        {
+            AnswerOptions = new List<AnswerOption>()
+            {
+                new AnswerOption()
+            };
+        }
+        public int Index { get; set; }
         public ExamText QuestionText { get; set; }
-        public Subject QuestionSubject { get; set; }
-        public QuestionType QuestionType { get; set; }
-
 #nullable enable
         public ICollection<AnswerOption>? AnswerOptions { get; set; }
-        public bool? QuestionCompleted { get; set; }
-        public TimeSpan? QuestionTimeLimit { get; set; }
-        public double? SuccessRate { get; set; }
 #nullable disable
     }
 }

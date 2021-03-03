@@ -1,0 +1,32 @@
+﻿@model ExamImageViewModel
+
+<form method="post" id="imageInputForm" class="inputForm hide">
+    <div class="mt-2">
+        <!-- Image file input-->
+        <div class="input-group d-flex justify-content-around">
+            <div>
+                <label for="imageFileInput" class="btn btn-default btn-file">
+                    Choose File
+                    <input asp-for="@Model.Image" hidden id="imageFileInput" class="form-control" readonly value="File Name...">
+                </label>
+            </div>
+            <!--Alignment Option List-->
+            <div>
+                <label asp-for="@Model.Alignment">Alignment: </label>
+                <select id="imageAlignmentInput" class="form-select" 
+                        asp-for="@Model.Alignment"
+                        asp-items="@Html.GetEnumSelectList<Alignment>()" 
+                        onchange="setImageAlignment(this)"></select>
+            </div>
+            <!--Image Size-->
+            <div>
+                <label asp-for="@Model.ImageSizes">Size: </label>
+                <select id="imageSizeInput" class="form-select"
+                        asp-for="@Model.ImageSizes"
+                        asp-items="@Html.GetEnumSelectList<AppSize>()"
+                        onchange="setImageSize(this)"></select>
+            </div>
+            <button id="SaveNewImageBtn" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

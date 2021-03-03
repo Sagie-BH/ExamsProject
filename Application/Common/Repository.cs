@@ -23,8 +23,8 @@ namespace Application.Common
         }
         public long GetKey(T entity)
         {
-            var keyName = context.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties
-                .Select(x => x.Name).Single();
+            var keyName = context.Model.FindEntityType(typeof(T)).FindPrimaryKey()
+                .Properties.Select(x => x.Name).Single();
 
             return (long)entity.GetType().GetProperty(keyName).GetValue(entity, null);
         }

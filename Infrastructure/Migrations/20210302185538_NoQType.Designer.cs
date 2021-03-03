@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ExamsAppDbContext))]
-    partial class ExamsAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210302185538_NoQType")]
+    partial class NoQType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,6 +98,10 @@ namespace Infrastructure.Migrations
                     b.Property<bool?>("IsPrivate")
                         .HasColumnType("bit");
 
+                    b.Property<double?>("SuccessRate")
+                        .HasPrecision(3, 2)
+                        .HasColumnType("float(3)");
+
                     b.Property<TimeSpan?>("TestTimeLimit")
                         .HasColumnType("time");
 
@@ -124,6 +130,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<long?>("QuestionTextId")
                         .HasColumnType("bigint");
+
+                    b.Property<TimeSpan?>("QuestionTimeLimit")
+                        .HasColumnType("time");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");

@@ -1,12 +1,11 @@
-﻿using Application.Data.Teacher;
-using Application.Data.Teacher.Exam;
+﻿using Application.Data.Teacher.Exam;
 using Application.Interfaces;
 using Application.ViewModels.Teacher;
+using Application.ViewModels.Teacher.Exam;
+using AutoMapper;
 using Domain.Entities.ObjectEntities;
-using System;
+using Domain.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Services
@@ -14,10 +13,15 @@ namespace Application.Services
     public class ExamService : IExamService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public ExamService(IUnitOfWork unitOfWork)
+        public AppExam NewExam { get; set; }
+
+        public ExamService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
+            NewExam = new AppExam();
         }
 
         public ExamViewModel GetNewExamViewModel(long teacherId)
@@ -32,7 +36,7 @@ namespace Application.Services
         public async Task<ExamViewModel> GetExamViewModelById(long examId)
         {
             var exam = await unitOfWork.Exams.GetFullExamByIdAsync(examId);
-            var questionList = new List<ExamQuestionDto>();
+            var questionList = new List<ExamQuestionViewModel>();
 
             foreach (var question in exam.Questions)
             {
@@ -43,14 +47,12 @@ namespace Application.Services
                     optionList.Add(new ExamAnswer()
                     {
                         IsRightAnswer = option.IsRightAnswer,
-                        AnswerText = option.AnswerText
+                        AnswerText = mapper.Map<ExamTextViewModel>(option.AnswerText)
                     });
                 }
-                questionList.Add(new ExamQuestionDto()
+                questionList.Add(new ExamQuestionViewModel()
                 {
-                    QuestionText = question.QuestionText,
-                    QuestionType = question.QuestionType,
-                    QuestionTimeLimit = question.QuestionTimeLimit,
+                    QuestionText = mapper.Map<ExamTextViewModel>(question.QuestionText),
                     AnswerOptions = optionList
                 });
             }
@@ -94,5 +96,11 @@ namespace Application.Services
         //    return await unitOfWork.Exams.EditAsync(exam, exam.Id) > 0;
         //}
 
+        public bool AddExamText(ExamTextViewModel examTextDto)
+        {
+            var newExamText = mapper.Map<ExamText>(examTextDto);
+            NewExam.ExamTexts.Add(newExamText);
+            return true;
+        }
     }
 }

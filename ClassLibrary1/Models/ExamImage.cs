@@ -7,11 +7,9 @@ namespace Domain.Models
 {
     public class ExamImage : DomainObject
     {
+        public int Index { get; set; }
         public string ImagePath { get; set; }
-#nullable enable
-        public ExamText? ImageText { get; set; }
-        public string? Desctiption { get; set; }
-        public Alignment Alignment { get; set; }
-#nullable disable
+        public string ImageSize { get; set; }
+        public Alignment Alignment { get; set; } = Alignment.Center;
     }
 }

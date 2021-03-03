@@ -1,5 +1,4 @@
-﻿using Application.Data.Teacher;
-using Application.ViewModels.Teacher;
+﻿using Application.ViewModels.Teacher.Exam;
 using System.Threading.Tasks;
 
 namespace Application.Interfaces
@@ -15,5 +14,6 @@ namespace Application.Interfaces
         //Task<bool> EditExamHeader(ExamViewModel viewModel);
         Task<ExamViewModel> GetExamViewModelById(long examId);
         ExamViewModel GetNewExamViewModel(long teacherId);
+        bool AddExamText(ExamTextViewModel examTextDto);
     }
 }

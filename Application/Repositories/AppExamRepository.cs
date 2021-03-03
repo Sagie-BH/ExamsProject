@@ -21,9 +21,8 @@ namespace Application.Repositories
             return await Entities
                 .Include(a => a.ExamImages)
                 .Include(a => a.ExamSubject)
-                .Include(a => a.ExamText)
+                .Include(a => a.ExamTexts)
                 .Include(a => a.Questions).ThenInclude(q => q.QuestionText)
-                .Include(a => a.Questions).ThenInclude(q => q.QuestionSubject)
                 .Include(a => a.Questions).ThenInclude(q => q.AnswerOptions)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }

@@ -1,16 +1,17 @@
 ﻿using Domain.Enums;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Data.Teacher.Dtos
+namespace Application.ViewModels.Teacher.Exam
 {
-    public class ExamImageDto
+    public class ExamImageViewModel
     {
-        public ExamTextDto ExamText { get; set; }
-        public string Description { get; set; }
         public IFormFile Image { get; set; }
         public Alignment Alignment { get; set; }
-    }
+        public AppSize ImageSizes { get; set; }
+    };
 }
+

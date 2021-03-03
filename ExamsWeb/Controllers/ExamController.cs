@@ -1,11 +1,8 @@
-﻿using Application.Data.Teacher.Dtos;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Application.ViewModels.Teacher;
+using Application.ViewModels.Teacher.Exam;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace ExamsWeb.Controllers
 {
@@ -28,9 +25,11 @@ namespace ExamsWeb.Controllers
             return RedirectToAction("Exam", examService.GetNewExamViewModel(teacherId));
         }
         [HttpPost]
-        public IActionResult AddTextInput([FromBody]ExamTextDto examText)
+        public IActionResult AddTextInput([FromBody]ExamTextViewModel examText)
         {
+            //examService.AddExamText(examText);
             return PartialView("_TextInputTemplate", examText);
         }
+
     }
 }

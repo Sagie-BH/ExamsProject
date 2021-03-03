@@ -1,9 +1,9 @@
 ﻿using Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Application.Data.Teacher.Dtos
+namespace Application.ViewModels.Teacher.Exam
 {
-    public class ExamTextDto
+    public class ExamTextViewModel
     {
         [Required]
         public string Text { get; set; }

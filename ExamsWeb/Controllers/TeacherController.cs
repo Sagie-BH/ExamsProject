@@ -1,10 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.ViewModels.Teacher;
-using Microsoft.AspNetCore.Authorization;
+using Application.ViewModels.Teacher.Exam;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExamsWeb.Controllers

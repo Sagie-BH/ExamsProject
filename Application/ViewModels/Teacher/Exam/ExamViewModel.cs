@@ -1,11 +1,10 @@
-﻿using Application.Data.Teacher.Dtos;
-using Application.Data.Teacher.Exam;
+﻿using Application.Data.Teacher.Exam;
 using Domain.Enums;
 using System;
 using System.Collections.Generic;
 
 
-namespace Application.ViewModels.Teacher
+namespace Application.ViewModels.Teacher.Exam
 {
     public class ExamViewModel
     {
@@ -22,9 +21,9 @@ namespace Application.ViewModels.Teacher
         public Alignment Alignment { get; set; }
         public ExamHeader ExamHeader { get; set; }
         public ExamSettings Settings { get; set; }
-        public List<ExamQuestionDto> Questions { get; set; }
-        public List<ExamTextDto> ExamTexts { get; set; }
-        public List<ExamImageDto> ExamImages { get; set; }
+        public List<ExamQuestionViewModel> Questions { get; set; }
+        public List<ExamTextViewModel> ExamTexts { get; set; }
+        public List<ExamImageViewModel> ExamImages { get; set; }
 
     }
 }

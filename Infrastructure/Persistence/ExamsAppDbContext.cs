@@ -30,11 +30,9 @@ namespace Infrastructure.Persistence
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new AppExamConfiguration());
             builder.ApplyConfiguration(new TeacherConfiguration());
             builder.ApplyConfiguration(new StudentExamsConfiguration());
             builder.ApplyConfiguration(new StudentConfiguration());
-            builder.ApplyConfiguration(new QuestionObjectConfiguration());
             builder.ApplyConfiguration(new ExamTextConfiguration());
         }
     }
