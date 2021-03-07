@@ -10,7 +10,7 @@ namespace Domain.Models
         public int Index { get; set; }
         public string Text { get; set; }
         public string Color { get; set; }
-        public int FontSize { get; set; }
+        public AppSize FontSize { get; set; }
         public Alignment Alignment { get; set; }
         public bool Bold { get; set; }
         public bool Underlined { get; set; }

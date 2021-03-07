@@ -1,0 +1,109 @@
+﻿@model ExamTextViewModel
+
+<div class="mt-2 d-flex justify-content-around">
+    <!--Font Size-->
+    <div>
+        <label class="mr-1" for="@(Model.IdName)FontSizeInput">Font Size: </label>
+        @if (Model.IdName == "answer")
+        {
+            <select id="@(Model.IdName)FontSizeInput" class="form-select" asp-for="@Model.FontSize"
+                    asp-items="Html.GetEnumSelectList<AppSize>()"
+                    onchange="setAnswersFontSize(this.value)">
+            </select>
+        }
+        else
+        {
+            <select id="@(Model.IdName)FontSizeInput" class="form-select" asp-for="@Model.FontSize"
+                    asp-items="Html.GetEnumSelectList<AppSize>()"
+                    onchange="setFontSize(this.value,'@(Model.IdName)')">
+            </select>
+        }
+    </div>
+    <!--CheckBoxes Icons-->
+    <div class="d-flex justify-content-between">
+        <!--Bold CheckBox-->
+        <div class="mr-2 image-checkbox d-flex justify-content-around">
+            @if (Model.IdName == "answer")
+            {
+                <input id="@(Model.IdName)BoldInput" class="checkBoxInput" type="checkbox"
+                       asp-for="@Model.Bold"
+                       onchange="AnwersTextBold(this)">
+            }
+            else
+            {
+                <input id="@(Model.IdName)BoldInput" class="checkBoxInput" type="checkbox"
+                       asp-for="@Model.Bold"
+                       onchange="textBold(this, '@(Model.IdName)')">
+            }
+            <label class="mb-0" for="@(Model.IdName)BoldInput">
+                <img src="~/images/bold.png" alt="#" class="img-fluid checkBoxIcon" />
+            </label>
+        </div>
+        <!--Italic CheckBox-->
+        <div class="image-checkbox d-flex justify-content-around">
+            @if (Model.IdName == "answer")
+            {
+                <input id="@(Model.IdName)ItalicInput" class="checkBoxInput" type="checkbox"
+                       asp-for="@Model.Italic" onchange="AnswersTextItalic(this)">
+            }
+            else
+            {
+                <input id="@(Model.IdName)ItalicInput" class="checkBoxInput" type="checkbox"
+                       asp-for="@Model.Italic" onchange="textItalic(this, '@(Model.IdName)')">
+            }
+            <label class="mb-0" for="@(Model.IdName)ItalicInput">
+                <img src="~/images/italic.png" alt="#" class="img-fluid checkBoxIcon" />
+            </label>
+        </div>
+        <!--Underline CheckBox-->
+        <div class="ml-2 image-checkbox d-flex justify-content-around">
+            @if (Model.IdName == "answer")
+            {
+                <input id="@(Model.IdName)UnderlineInput" class="checkBoxInput" type="checkbox"
+                       asp-for="@Model.Underlined" onchange="AnswersTextUnderline(this)">
+            }
+            else
+            {
+                <input id="@(Model.IdName)UnderlineInput" class="checkBoxInput" type="checkbox"
+                       asp-for="@Model.Underlined" onchange="textUnderline(this, '@(Model.IdName)')">
+            }
+            <label class="mb-0" for="@(Model.IdName)UnderlineInput">
+                <img src="~/images/underlined-text.png" alt="#" class="img-fluid checkBoxIcon" />
+            </label>
+        </div>
+    </div>
+    <!--Alignment Option List-->
+    <div>
+        <label class="mr-1" for="@(Model.IdName)AlignmentSelect">Alignment: </label>
+        @if (Model.IdName == "answer")
+        {
+            <select id="@(Model.IdName)AlignmentSelect" class="form-select" asp-for="@Model.Alignment"
+                    asp-items="Html.GetEnumSelectList<Alignment>()" onchange="AnswersTextAlignment(this.value)">
+            </select>
+        }
+        else
+        {
+            <select id="@(Model.IdName)AlignmentSelect" class="form-select" asp-for="@Model.Alignment"
+                    asp-items="Html.GetEnumSelectList<Alignment>()" onchange="setTextAlignment(this.value, '@(Model.IdName)')">
+            </select>
+        }
+    </div>
+    <!--Color-->
+    <div>
+        <label class="mr-1" for="@(Model.IdName)ColorPicker">Color: </label>
+        @if (Model.IdName == "answer")
+        {
+            <input value="#000000" id="@(Model.IdName)ColorPicker" type="color"
+                   asp-for="@Model.Color" onchange="AnswersTextColor(this.value)" />
+
+        }
+        else
+        {
+            <input value="#000000" id="@(Model.IdName)ColorPicker" type="color"
+                   asp-for="@Model.Color" onchange="setTextColor(this.value, '@(Model.IdName)')" />
+        }
+    </div>
+</div>
+<hr class="mt-3 mb-2">
+<textarea style="font-size:20px" class="ml-1 my-2 row textAreaInput @(Model.IdName)Input"
+          id="@(Model.IdName)AreaInput" placeholder="Write @(Model.IdName) here..." required></textarea>

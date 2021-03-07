@@ -2,6 +2,7 @@
 using Application.ViewModels.Teacher;
 using Application.ViewModels.Teacher.Exam;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ExamsWeb.Controllers
@@ -45,7 +46,7 @@ namespace ExamsWeb.Controllers
         {
             var viewModel = new ExamViewModel()
             {
-                TeacherId = teacherId
+                TeacherId = teacherId,
             };
             return View(viewModel);
         }

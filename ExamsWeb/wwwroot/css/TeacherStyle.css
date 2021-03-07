@@ -41,7 +41,7 @@
     border-style: solid;
 }
 
-#textAreaInput {
+.textAreaInput {
     width: 100%;
 }
 
@@ -80,4 +80,18 @@
 }
 .checkBoxInput {
     display: none;
+}
+.answerDiv {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+.rightAnswerCb {
+
+}
+.answerNumSpan {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    transition: right 0.2s;
 }

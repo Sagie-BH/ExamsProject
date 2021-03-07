@@ -6,7 +6,7 @@
         this.subjectDescription = subjectDescription;
     }
 }
-class ExamTextInput {
+class ExamInput {
     constructor(Text, Color, FontSize, Alignment, Bold, Underline, Italic) {
         this.Text = Text;
         this.Color = Color;

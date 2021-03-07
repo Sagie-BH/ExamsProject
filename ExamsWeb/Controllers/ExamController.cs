@@ -30,6 +30,22 @@ namespace ExamsWeb.Controllers
             //examService.AddExamText(examText);
             return PartialView("_TextInputTemplate", examText);
         }
-
+        [HttpPost]
+        public IActionResult GetTextInput([FromBody]string textInputType)
+        {
+            var viewModel = new ExamTextViewModel();
+            switch (textInputType)
+            {
+                case "text":
+                    viewModel.IdName = "text";
+                    break;
+                case "question":
+                    viewModel.IdName = "question";
+                    break;
+                default:
+                    break;
+            }
+            return PartialView("_TextInput", viewModel);
+        }
     }
 }

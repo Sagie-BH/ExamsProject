@@ -44,7 +44,6 @@
         </section>
         <section class="p-2 my-2" id="inputsSection">
 
-            <partial name="_TextInput" for="ExamTexts[0]" />
 
             <partial name="_ImageInput" for="ExamImages[0]" />
 
@@ -53,11 +52,11 @@
 
         <!--Input Box - 3 Options/Buttons - Add Text/Image/Quistion-->
         <section id="questionInput" class="row d-flex justify-content-around">
-            <a id="addExamText" class="col-4">
+            <a id="addExamText" class="col-4" onclick="GetTextInput('text')">
                 <img class="add-icons mx-auto d-block" src="~/images/teacher/add-text-icon.png" />
                 <label class="addIconLbl col-12 text-center">Add Text</label>
             </a>
-            <a id="addExamQuestion" class="col-4">
+            <a id="addExamQuestion" class="col-4" onclick="GetTextInput('question')">
                 <img class="add-icons mx-auto d-block" src="~/images/teacher/add-question-icon.png" />
                 <label class="addIconLbl col-12 text-center">Add Question</label>
             </a>

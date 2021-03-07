@@ -1,7 +1,6 @@
 ﻿const headerForm = document.getElementById("headerForm");
 const saveExamHeaderBtn = document.getElementById("saveExamHeaderBtn");
 const examHeader = document.getElementById("examHeader");
-const textAreaInput = document.getElementById("textAreaInput");
 
 let index = 0;
 
@@ -45,7 +44,9 @@ const CheckedBoxEvent = (checkBox) => {
 }
 
 // Bold Text
-const textBold = (cb) => {
+const textBold = (cb, input) => {
+    const textAreaInput = document.getElementById(input + "AreaInput");
+
     if (cb.checked) {
         textAreaInput.style.fontWeight = "bold";
     }
@@ -56,7 +57,8 @@ const textBold = (cb) => {
 }
 
 // Italic Text
-const textItalic = (cb) => {
+const textItalic = (cb, input) => {
+    const textAreaInput = document.getElementById(input + "AreaInput");
     if (cb.checked) {
         textAreaInput.style.fontStyle = "italic";
     }
@@ -67,25 +69,51 @@ const textItalic = (cb) => {
 
 }
 // Underline Text
-const textUnderline = (cb) => {
+const textUnderline = (cb, input) => {
+    const textAreaInput = document.getElementById(input + "AreaInput");
     if (cb.checked) {
-        textAreaInput.style.textDecoration = "underline"
+        textAreaInput.style.textDecoration = "underline";
     }
     else {
-        textAreaInput.style.textDecoration = "none"
+        textAreaInput.style.textDecoration = "none";
     }
     CheckedBoxEvent(cb);
 }
 // Font Size
-const setFontSize = (size) => {
-    textAreaInput.style.fontSize = size + "px";
+let textInputFontSize = 20;
+const setFontSize = (size, input) => {
+    const textAreaInput = document.getElementById(input + "AreaInput");
+    switch (size) {
+        case "0":
+            textInputFontSize = 16;
+            break;
+        case "1":
+            textInputFontSize = 28;
+            break;
+        case "2":
+            textInputFontSize = 40;
+            break;
+        case "3":
+            textInputFontSize = 54;
+            break;
+        case "4":
+            textInputFontSize= 72;
+            break;
+    }
+    if (input == 'text' || input == 'question') {
+        textAreaInput.style.fontSize = textInputFontSize + "px";
+    }
+    return textInputFontSize;
 }
+
 // Font Color
-const setTextColor = (color) => {
+const setTextColor = (color, input) => {
+    const textAreaInput = document.getElementById(input + "AreaInput");
     textAreaInput.style.color = color;
 }
 // Text Alignment
-const setTextAlignment = (alignment) => {
+const setTextAlignment = (alignment, input) => {
+    const textAreaInput = document.getElementById(input + "AreaInput");
     switch (alignment) {
         case "0":
             textAreaInput.style.textAlign = "Left";
@@ -99,30 +127,31 @@ const setTextAlignment = (alignment) => {
     }
 }
 
+// Getting Text Input Values From Inputs - Returns Exam Input Object
+const GetTextInputValues = (inputType) => {
+    let examInput = new ExamInput();
+    examInput.Text = document.getElementById(inputType + "AreaInput").value;
+    examInput.Color = document.getElementById(inputType + "ColorPicker").value;
+    const fontSizeInput = document.getElementById(inputType + "FontSizeInput");
+    examInput.FontSize = setFontSize(fontSizeInput.value, fontSizeInput);
+    examInput.Alignment = document.getElementById(inputType + "AlignmentSelect").value;
+    examInput.Bold = document.getElementById(inputType + "BoldInput").checked;
+    examInput.Underline = document.getElementById(inputType + "UnderlineInput").checked;
+    examInput.Italic = document.getElementById(inputType + "ItalicInput").checked;
+    examInput.Index = index++;
+    return examInput;
+}
 
-
-// Save Text Input To Object
+// Save Text Input To Object - Returns Filled Template
 let textInputCount = 0;
-document.getElementById("textInputBtn").addEventListener('click', (e) => {
-    e.preventDefault();
-    // Creating Text Input Object From Inputs
-    let examTextInput = new ExamTextInput();
-    examTextInput.Text = document.getElementById("textAreaInput").value;
-    examTextInput.Color = document.getElementById("textColorPicker").value;
-    examTextInput.FontSize = document.getElementById("textFontSizeInput").value;
-    examTextInput.Alignment = document.getElementById("textAlignmentSelect").value;
-    examTextInput.Bold = document.getElementById("textBoldInput").checked;
-    examTextInput.Underline = document.getElementById("textUnderlineInput").checked;
-    examTextInput.Italic = document.getElementById("textItalicInput").checked;
-    examTextInput.Index = index++;
-    //localStorage.setItem("ExamText_" + textInputCount++, JSON.stringify(examTextInput));
+const SaveTextInput = () => {
+    let examTextInput = GetTextInputValues('text');
 
     AddExamTextToStorage(examTextInput);
 
     // Validate TextInputFrom & TextArea Not Empty
     $(textInputForm).validate().form();
     if ($(textInputForm).valid() == true) {
-        // Add Text Input To Exam
         $.ajax({
             type: "POST",
             url: 'AddTextInput/',
@@ -133,28 +162,35 @@ document.getElementById("textInputBtn").addEventListener('click', (e) => {
                 console.log(info);
                 document.getElementById("examInputSection").insertAdjacentHTML('beforeend', data);
                 document.getElementById("questionInput").classList.remove("hide");
+                $(textInputForm).remove();
             },
             error: (data, err) => {
                 console.log(data);
                 console.log(err);
             }
         });
-        textInputForm.reset();
-        Array.from(document.getElementsByClassName("checkBoxInput"))
-            .forEach(cb => {
-                cb.parentElement.classList.remove("pushIcon");
-            });
-        $('input:checkbox').removeAttr('checked');
-        textAreaInput.removeAttribute('style');
-        document.getElementById("textInputForm").classList.add("hide")
     }
-});
+}
 
-// Showing Text Input 
-document.getElementById("addExamText").addEventListener('click', () => {
-    document.getElementById("textInputForm").classList.remove("hide");
-    document.getElementById("questionInput").classList.add("hide");
-});
+// Getting Text Input Partial View
+const GetTextInput = (textInputType) => {
+    $.ajax({
+        type: "POST",
+        url: 'GetTextInput/',
+        data: JSON.stringify(textInputType),
+        dataType: "html",
+        contentType: "application/json; charset=utf-8",
+        success: (data, info) => {
+            //console.log(data);
+            document.getElementById("inputsSection").insertAdjacentHTML('beforeend', data);
+            document.getElementById("questionInput").classList.add("hide");
+        },
+        error: (data, err) => {
+            console.log(data);
+            console.log(err);
+        }
+    });
+}
 
 
 // Add Image Input To Exam
@@ -267,3 +303,63 @@ const AddExamImageToStorage = (imageInput) => {
     ExamImages.push(imageInput);
     localStorage.setItem('ExamImages', JSON.stringify(ExamImages));
 };
+
+
+// Add Answer
+let answerIndex = 0;
+const AddAnswer = () => {
+    let answerAreaInput = document.getElementById('answerAreaInput');
+    let clone = answerAreaInput.cloneNode(false);
+    clone.id = 'answer' + index++ + 'AreaInput';
+    answerAreaInput.parentElement.insertAdjacentElement('beforeend', clone);
+}
+// Answers Group Font Size
+const setAnswersFontSize = (size) => {
+    const answersInput = document.getElementsByClassName('answerInput');
+    Array.from(answersInput).forEach(input => {
+        let inputIdParts = input.id.split('AreaInput');
+        setFontSize(size, inputIdParts[0]);
+    })
+}
+
+// Answers Group Bold
+const AnwersTextBold = (cb) => {
+    const answersInput = document.getElementsByClassName('answerInput');
+    Array.from(answersInput).forEach(input => {
+        let inputIdParts = input.id.split('AreaInput');
+        textBold(cb, inputIdParts[0]);
+    })
+}
+
+// Answers Group Italic
+const AnswersTextItalic = (cb) => {
+    const answersInput = document.getElementsByClassName('answerInput');
+    Array.from(answersInput).forEach(input => {
+        let inputIdParts = input.id.split('AreaInput');
+        textItalic(cb, inputIdParts[0]);
+    })
+}
+// Answers Group Underline
+const AnswersTextUnderline = (cb) => {
+    const answersInput = document.getElementsByClassName('answerInput');
+    Array.from(answersInput).forEach(input => {
+        let inputIdParts = input.id.split('AreaInput');
+        textUnderline(cb, inputIdParts[0]);
+    })
+}
+// Answers Group Alignment
+const AnswersTextAlignment = (alignment) => {
+    const answersInput = document.getElementsByClassName('answerInput');
+    Array.from(answersInput).forEach(input => {
+        let inputIdParts = input.id.split('AreaInput');
+        setTextAlignment(alignment, inputIdParts[0]);
+    })
+}
+// Answers Group Text Color
+const AnswersTextColor = (color) => {
+    const answersInput = document.getElementsByClassName('answerInput');
+    Array.from(answersInput).forEach(input => {
+        let inputIdParts = input.id.split('AreaInput');
+        setTextColor(color, inputIdParts[0]);
+    })
+}
