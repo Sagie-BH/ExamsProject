@@ -1,0 +1,11 @@
+﻿@model ExamQuestionViewModel
+
+<partial name="_TextInputTemplate" for="QuestionText" />
+
+@if (Model.AnswerOptions != null)
+{
+    foreach (var answer in Model.AnswerOptions)
+    {
+        <partial name="_TextInputTemplate" for="@answer.AnswerText" />
+    }
+}

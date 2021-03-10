@@ -18,7 +18,6 @@ namespace Application.ViewModels.Teacher.Exam
         }
         public long ExamId { get; set; }
         public long TeacherId { get; set; }
-        public Alignment Alignment { get; set; }
         public ExamHeader ExamHeader { get; set; }
         public ExamSettings Settings { get; set; }
         public List<ExamQuestionViewModel> Questions { get; set; }

@@ -66,8 +66,8 @@ const textItalic = (cb, input) => {
         textAreaInput.style.fontStyle = "normal";
     }
     CheckedBoxEvent(cb);
-
 }
+
 // Underline Text
 const textUnderline = (cb, input) => {
     const textAreaInput = document.getElementById(input + "AreaInput");
@@ -79,13 +79,14 @@ const textUnderline = (cb, input) => {
     }
     CheckedBoxEvent(cb);
 }
+
 // Font Size
 let textInputFontSize = 20;
 const setFontSize = (size, input) => {
     const textAreaInput = document.getElementById(input + "AreaInput");
     switch (size) {
         case "0":
-            textInputFontSize = 16;
+            textInputFontSize = 18;
             break;
         case "1":
             textInputFontSize = 28;
@@ -97,12 +98,10 @@ const setFontSize = (size, input) => {
             textInputFontSize = 54;
             break;
         case "4":
-            textInputFontSize= 72;
+            textInputFontSize = 72;
             break;
     }
-    if (input == 'text' || input == 'question') {
-        textAreaInput.style.fontSize = textInputFontSize + "px";
-    }
+    textAreaInput.style.fontSize = textInputFontSize + "px";
     return textInputFontSize;
 }
 
@@ -111,6 +110,7 @@ const setTextColor = (color, input) => {
     const textAreaInput = document.getElementById(input + "AreaInput");
     textAreaInput.style.color = color;
 }
+
 // Text Alignment
 const setTextAlignment = (alignment, input) => {
     const textAreaInput = document.getElementById(input + "AreaInput");
@@ -128,48 +128,82 @@ const setTextAlignment = (alignment, input) => {
 }
 
 // Getting Text Input Values From Inputs - Returns Exam Input Object
-const GetTextInputValues = (inputType) => {
+const GetTextInputValues = (inputID) => {
     let examInput = new ExamInput();
-    examInput.Text = document.getElementById(inputType + "AreaInput").value;
-    examInput.Color = document.getElementById(inputType + "ColorPicker").value;
-    const fontSizeInput = document.getElementById(inputType + "FontSizeInput");
-    examInput.FontSize = setFontSize(fontSizeInput.value, fontSizeInput);
-    examInput.Alignment = document.getElementById(inputType + "AlignmentSelect").value;
-    examInput.Bold = document.getElementById(inputType + "BoldInput").checked;
-    examInput.Underline = document.getElementById(inputType + "UnderlineInput").checked;
-    examInput.Italic = document.getElementById(inputType + "ItalicInput").checked;
-    examInput.Index = index++;
+    examInput.Text = document.getElementById(inputID + "AreaInput").value;
+    examInput.Color = document.getElementById(inputID + "ColorPicker").value;
+    const fontSizeInput = document.getElementById(inputID + "FontSizeInput");
+    examInput.FontSize = setFontSize(fontSizeInput.value, inputID);
+    examInput.Alignment = document.getElementById(inputID + "AlignmentSelect").value;
+    examInput.Bold = document.getElementById(inputID + "BoldInput").checked;
+    examInput.Underline = document.getElementById(inputID + "UnderlineInput").checked;
+    examInput.Italic = document.getElementById(inputID + "ItalicInput").checked;
+    if (!inputID.includes("answer")) {
+        examInput.Index = index++;
+    }
     return examInput;
 }
 
-// Save Text Input To Object - Returns Filled Template
+// Save Text Input To Object
 let textInputCount = 0;
-const SaveTextInput = () => {
-    let examTextInput = GetTextInputValues('text');
-
-    AddExamTextToStorage(examTextInput);
-
+let answerArray = [];
+const SaveTextInput = (inputID) => {
     // Validate TextInputFrom & TextArea Not Empty
-    $(textInputForm).validate().form();
-    if ($(textInputForm).valid() == true) {
-        $.ajax({
-            type: "POST",
-            url: 'AddTextInput/',
-            data: JSON.stringify(examTextInput),
-            dataType: "html",
-            contentType: "application/json; charset=utf-8",
-            success: (data, info) => {
-                console.log(info);
-                document.getElementById("examInputSection").insertAdjacentHTML('beforeend', data);
-                document.getElementById("questionInput").classList.remove("hide");
-                $(textInputForm).remove();
-            },
-            error: (data, err) => {
-                console.log(data);
-                console.log(err);
-            }
-        });
+    const currentInputForm = document.getElementById(inputID + 'InputForm')
+    $(currentInputForm).validate().form();
+    if ($(currentInputForm).valid() == true) {
+        let examTextInput = GetTextInputValues(inputID);
+        if (inputID == "text") {
+            AddExamTextToStorage(examTextInput, true);
+        }
+        AddTextInputTemplate(examTextInput);
+        document.getElementById("questionInput").classList.remove("hide");
+        $(currentInputForm).remove();
+        return examTextInput;
     }
+}
+
+// Adding Text Input Template To Exam
+const AddTextInputTemplate = (examTextInput, isAsync) => {
+    return $.ajax({
+        async: isAsync,
+        type: "POST",
+        url: 'AddTextInput/',
+        data: JSON.stringify(examTextInput),
+        dataType: "html",
+        contentType: "application/json; charset=utf-8",
+        success: (data, info) => {
+            console.log(info);
+            document.getElementById("examInputSection").insertAdjacentHTML('beforeend', data);
+        },
+        error: (err) => {
+            console.log(err);
+        }
+    });
+}
+
+// Question Saving
+const SaveQuestion = inputID => {
+    const questionInputForm = document.getElementById('questionInputForm')
+    $(questionInputForm).validate().form();
+    if ($(questionInputForm).valid() == true) {
+        let newQuestion = GetTextInputValues(inputID);
+        let answerArr = [];
+        let baseAnswer = GetTextInputValues('answer');
+        const answersInputArr = document.getElementsByClassName('answerInput');
+        AddTextInputTemplate(newQuestion, false)
+        Array.from(answersInputArr).forEach(input => {
+            let newAnswer = { ...baseAnswer };
+            newAnswer.Text = input.value;
+            answerArr.push(newAnswer);
+            AddTextInputTemplate(newAnswer, false);
+        });
+        newQuestion.AnswerOptions = answerArr;
+        localStorage.setItem('QuestionText', JSON.stringify(newQuestion));
+        document.getElementById("questionInput").classList.remove("hide");
+        $(questionInputForm).remove();
+    }
+    return false;
 }
 
 // Getting Text Input Partial View
@@ -192,7 +226,6 @@ const GetTextInput = (textInputType) => {
     });
 }
 
-
 // Add Image Input To Exam
 let imageCount = 0;
 document.getElementById("addExamImage").addEventListener('click', () => {
@@ -214,7 +247,7 @@ document.getElementById("imageFileInput").addEventListener('change', (image) => 
     newImage.onload = function () {
         URL.revokeObjectURL(newImage.src) // free memory
     }
-    newImage.classList.add('d-block','mr-auto');
+    newImage.classList.add('d-block', 'mr-auto');
     newImage.style.width = "100%";
 });
 
@@ -294,6 +327,7 @@ const AddExamTextToStorage = (textInput) => {
     ExamTexts.push(textInput);
     localStorage.setItem('ExamTexts', JSON.stringify(ExamTexts));
 };
+
 // Adding ImageInput To Storage List
 const AddExamImageToStorage = (imageInput) => {
     let ExamImages = JSON.parse(localStorage.getItem('ExamImages'));
@@ -304,14 +338,15 @@ const AddExamImageToStorage = (imageInput) => {
     localStorage.setItem('ExamImages', JSON.stringify(ExamImages));
 };
 
-
 // Add Answer
 let answerIndex = 0;
 const AddAnswer = () => {
     let answerAreaInput = document.getElementById('answerAreaInput');
     let clone = answerAreaInput.cloneNode(false);
     clone.id = 'answer' + index++ + 'AreaInput';
+    clone.value = '';
     answerAreaInput.parentElement.insertAdjacentElement('beforeend', clone);
+    return false;
 }
 // Answers Group Font Size
 const setAnswersFontSize = (size) => {

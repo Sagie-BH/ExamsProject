@@ -33,18 +33,8 @@ namespace ExamsWeb.Controllers
         [HttpPost]
         public IActionResult GetTextInput([FromBody]string textInputType)
         {
-            var viewModel = new ExamTextViewModel();
-            switch (textInputType)
-            {
-                case "text":
-                    viewModel.IdName = "text";
-                    break;
-                case "question":
-                    viewModel.IdName = "question";
-                    break;
-                default:
-                    break;
-            }
+            var viewModel = examService.GetTextInputByTypeString(textInputType);
+
             return PartialView("_TextInput", viewModel);
         }
     }

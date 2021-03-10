@@ -32,50 +32,74 @@ namespace Application.Services
                 ExamId = unitOfWork.Exams.GetCount() + 1
             };
         }
-
-        public async Task<ExamViewModel> GetExamViewModelById(long examId)
+        public ExamTextViewModel GetTextInputByTypeString(string type)
         {
-            var exam = await unitOfWork.Exams.GetFullExamByIdAsync(examId);
-            var questionList = new List<ExamQuestionViewModel>();
-
-            foreach (var question in exam.Questions)
+            var textViewModel = new ExamTextViewModel();
+            switch (type)
             {
-                var optionList = new List<ExamAnswer>();
-
-                foreach (var option in question.AnswerOptions)
-                {
-                    optionList.Add(new ExamAnswer()
-                    {
-                        IsRightAnswer = option.IsRightAnswer,
-                        AnswerText = mapper.Map<ExamTextViewModel>(option.AnswerText)
-                    });
-                }
-                questionList.Add(new ExamQuestionViewModel()
-                {
-                    QuestionText = mapper.Map<ExamTextViewModel>(question.QuestionText),
-                    AnswerOptions = optionList
-                });
+                case "text":
+                    textViewModel.IdName = "text";
+                    break;
+                case "question":
+                    textViewModel.IdName = "question";
+                    break;
+                default:
+                    break;
             }
-
-            return new ExamViewModel()
-            {
-                ExamId = exam.Id,
-                ExamHeader = new ExamHeader()
-                {
-                    ExamTitle = exam.Title,
-                    ExamDescription = exam.Description,
-                    SubjectTitle = exam.ExamSubject.Title,
-                    SubjectDescription = exam.ExamSubject.Description,
-                },
-                Settings = new ExamSettings()
-                {
-                    IsExamPrivate = exam.IsPrivate.HasValue,
-                    ExamDueDate = exam.DueTime.Value,
-                    ExamTimeLimit = exam.TestTimeLimit
-                },
-                Questions = questionList
-            };
+            return textViewModel;
         }
+
+        //public bool AddExamText(ExamTextViewModel examTextDto)
+        //{
+        //    var newExamText = mapper.Map<ExamText>(examTextDto);
+        //    NewExam.ExamTexts.Add(newExamText);
+        //    return true;
+        //}
+
+
+        //public async Task<ExamViewModel> GetExamViewModelById(long examId)
+        //{
+        //    var exam = await unitOfWork.Exams.GetFullExamByIdAsync(examId);
+        //    var questionList = new List<ExamQuestionViewModel>();
+
+        //    foreach (var question in exam.Questions)
+        //    {
+        //        var optionList = new List<ExamAnswer>();
+
+        //        foreach (var option in question.AnswerOptions)
+        //        {
+        //            optionList.Add(new ExamAnswer()
+        //            {
+        //                IsRightAnswer = option.IsRightAnswer,
+        //                AnswerText = mapper.Map<ExamTextViewModel>(option.AnswerText)
+        //            });
+        //        }
+        //        questionList.Add(new ExamQuestionViewModel()
+        //        {
+        //            QuestionText = mapper.Map<ExamTextViewModel>(question.QuestionText),
+        //            AnswerOptions = optionList
+        //        });
+        //    }
+
+        //    return new ExamViewModel()
+        //    {
+        //        ExamId = exam.Id,
+        //        ExamHeader = new ExamHeader()
+        //        {
+        //            ExamTitle = exam.Title,
+        //            ExamDescription = exam.Description,
+        //            SubjectTitle = exam.ExamSubject.Title,
+        //            SubjectDescription = exam.ExamSubject.Description,
+        //        },
+        //        Settings = new ExamSettings()
+        //        {
+        //            IsExamPrivate = exam.IsPrivate.HasValue,
+        //            ExamDueDate = exam.DueTime.Value,
+        //            ExamTimeLimit = exam.TestTimeLimit
+        //        },
+        //        Questions = questionList
+        //    };
+        //}
 
         //public async Task<bool> EditExamHeader(ExamViewModel viewModel)
         //{
@@ -96,11 +120,5 @@ namespace Application.Services
         //    return await unitOfWork.Exams.EditAsync(exam, exam.Id) > 0;
         //}
 
-        public bool AddExamText(ExamTextViewModel examTextDto)
-        {
-            var newExamText = mapper.Map<ExamText>(examTextDto);
-            NewExam.ExamTexts.Add(newExamText);
-            return true;
-        }
     }
 }

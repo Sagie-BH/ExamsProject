@@ -12,7 +12,7 @@
 
     @if (Model.IdName == "text")
     {
-        <input id="@(Model.IdName)InputBtn" class="btn-primary" onclick="SaveTextInput()" />
+        <input id="@(Model.IdName)InputBtn" class="btn-primary" onclick="SaveTextInput('@(Model.IdName)')" />
     }
     @if (Model.IdName == "question")
     {
@@ -20,7 +20,7 @@
 
         <h3 class="text-center mb-3">Answers</h3>
 
-        <div class="px-3 mt-1">
+        <div class="px-4 mt-1">
             @{
                 var answer = new ExamTextViewModel()
                 {
@@ -32,14 +32,13 @@
             <!--Add Answer Button-->
         </div>
         <div class="text-center mx-2">
-            <button id="addAnswerBtn" onclick="AddAnswer()" class="mt-2">Add Answer</button>
+            <button id="addAnswerBtn" onclick="return AddAnswer()" class="mt-2">Add Answer</button>
         </div>
 
+        <!--Save Question Button-->
         <hr class="my-3">
         <div class="text-right">
-            <button id="addAnswerBtn" onclick="SaveQuestion()" class="mt-2 btn btn-primary">Save Question</button>
+            <button id="SaveQuestionBtn" onclick="return SaveQuestion('@(Model.IdName)')" class="mt-2 btn btn-primary">Save Question</button>
         </div>
     }
-
-
 </form>
