@@ -6,10 +6,10 @@
 
 <header class="mt-3">
     <form id="headerForm" method="post" class="offset-2 col-8 ">
+        <button id="saveExamHeaderBtn"><img class="float-right p-1" src="~/images/save-icon.png" width="30"/></button>
         <div class="row text-center">
-            <input class="headerValidateGroup" placeholder="Title" asp-for="ExamHeader.ExamTitle" id="examTitleInput" style="font-size: 32px"/>
+            <input class="headerValidateGroup" placeholder="Title" asp-for="ExamHeader.ExamTitle" id="examTitleInput" style="font-size: 32px" />
             <span asp-validation-for="ExamHeader.ExamTitle" class="text-danger"></span>
-            <button id="saveExamHeaderBtn"><img class="float-right ml-2 p-1" src="~/images/save-icon.png" width="30" /></button>
         </div>
         <div class="row text-center">
             <input class="headerValidateGroup" placeholder="Description" asp-for="ExamHeader.ExamDescription" id="examDescriptionInput" style="font-size: 24px" />
@@ -40,7 +40,6 @@
 
         <hr class="my-2 col-12">
         <section class="p-2 my-2" id="examInputSection">
-
         </section>
         <section class="p-2 my-2" id="inputsSection">
 
@@ -72,10 +71,10 @@
 
 
     <!--Exam Settings-->
-    <section id="examSettingsSection" class="col-md-2 p-2 ml-2">
+    <form id="examSettingsForm" class="col-md-2 p-2 ml-2">
+        <img id="examSettingsIcon" src="~/images/settings-icon.png" class="float-right" />
         <div class="d-flex justify-content-between">
             <h5>Exam Settings</h5>
-            <img id="examSettingsIcon" src="~/images/settings-icon.png" />
         </div>
         <div class="mt-4">
             <label asp-for="Settings.IsExamPrivate"></label>
@@ -94,7 +93,7 @@
             <span asp-validation-for="Settings.ExamTimeLimit"></span>
         </div>
         <hr class="my-4">
-    </section>
+    </form>
 </main>
 
 <script src="~/js/Models/ExamHeader.js"></script>

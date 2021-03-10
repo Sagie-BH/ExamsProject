@@ -24,9 +24,5 @@ namespace Application.Repositories
                 .Include(t => t.MyClasses).ThenInclude(c => c.Students)
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
-        //public async Task<Teacher> GetTeacherWithClassesById(long id)
-        //{
-        //    return await Entities.Include(t => t.cl)
-        //}
     }
 }

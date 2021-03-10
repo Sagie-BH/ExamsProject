@@ -95,3 +95,6 @@
     left: 5px;
     transition: right 0.2s;
 }
+#examInputSection > * {
+    margin-bottom: 5px;
+}

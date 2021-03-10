@@ -5,9 +5,6 @@ namespace Application.Interfaces
 {
     public interface IExamService
     {
-        ExamViewModel GetNewExamViewModel(long teacherId);
         ExamTextViewModel GetTextInputByTypeString(string type);
-
-        //bool AddExamText(ExamTextViewModel examTextDto);
     }
 }

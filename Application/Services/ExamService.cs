@@ -24,14 +24,6 @@ namespace Application.Services
             NewExam = new AppExam();
         }
 
-        public ExamViewModel GetNewExamViewModel(long teacherId)
-        {
-            return new ExamViewModel()
-            {
-                TeacherId = teacherId,
-                ExamId = unitOfWork.Exams.GetCount() + 1
-            };
-        }
         public ExamTextViewModel GetTextInputByTypeString(string type)
         {
             var textViewModel = new ExamTextViewModel();

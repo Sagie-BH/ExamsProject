@@ -22,7 +22,7 @@ namespace ExamsWeb.Controllers
         [HttpGet]
         public IActionResult CreateExam(long teacherId)
         {
-            return RedirectToAction("Exam", examService.GetNewExamViewModel(teacherId));
+            return RedirectToAction("Exam", new ExamViewModel() { TeacherId = teacherId });
         }
         [HttpPost]
         public IActionResult AddTextInput([FromBody]ExamTextViewModel examText)

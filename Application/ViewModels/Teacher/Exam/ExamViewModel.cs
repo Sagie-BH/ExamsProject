@@ -16,7 +16,6 @@ namespace Application.ViewModels.Teacher.Exam
                 ExamTimeLimit = TimeSpan.Zero
             };
         }
-        public long ExamId { get; set; }
         public long TeacherId { get; set; }
         public ExamHeader ExamHeader { get; set; }
         public ExamSettings Settings { get; set; }

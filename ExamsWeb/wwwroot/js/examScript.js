@@ -12,7 +12,6 @@ saveExamHeaderBtn.addEventListener("click", (e) => {
         ChangeHeaderSection();
     };
 });
-
 // Hide & Show Header
 const ChangeHeaderSection = () => {
     $(headerForm).hide();
@@ -199,7 +198,7 @@ const SaveQuestion = inputID => {
             AddTextInputTemplate(newAnswer, false);
         });
         newQuestion.AnswerOptions = answerArr;
-        localStorage.setItem('QuestionText', JSON.stringify(newQuestion));
+        AddExamQuestionToStorage(newQuestion);
         document.getElementById("questionInput").classList.remove("hide");
         $(questionInputForm).remove();
     }
@@ -235,6 +234,7 @@ document.getElementById("addExamImage").addEventListener('click', () => {
     let newDiv = document.createElement('div');
     newDiv.appendChild(newImage);
     newDiv.setAttribute('id', "examImageDiv" + imageCount);
+    newDiv.classList.add('mb-2');
     newImage.classList.add('col-4');
     newImage.setAttribute('id', "examImage" + imageCount);
     document.getElementById("examInputSection").appendChild(newDiv);
@@ -312,7 +312,6 @@ document.getElementById('SaveNewImageBtn').addEventListener('click', (e) => {
         Index: index++
     };
     imageCount++;
-    //localStorage.setItem('ExamImage_' + imageCount, JSON.stringify(newImageToSend));
     AddExamImageToStorage(newImageToStore);
     document.getElementById('imageInputForm').classList.add('hide');
     document.getElementById("questionInput").classList.remove("hide");
@@ -336,6 +335,16 @@ const AddExamImageToStorage = (imageInput) => {
     }
     ExamImages.push(imageInput);
     localStorage.setItem('ExamImages', JSON.stringify(ExamImages));
+};
+
+// Adding QuestionInput To Storage List
+const AddExamQuestionToStorage = (questionInput) => {
+    let ExamImages = JSON.parse(localStorage.getItem('ExamQuestions'));
+    if (ExamImages == null) {
+        ExamImages = [];
+    }
+    ExamImages.push(questionInput);
+    localStorage.setItem('ExamQuestions', JSON.stringify(ExamImages));
 };
 
 // Add Answer
@@ -374,6 +383,7 @@ const AnswersTextItalic = (cb) => {
         textItalic(cb, inputIdParts[0]);
     })
 }
+
 // Answers Group Underline
 const AnswersTextUnderline = (cb) => {
     const answersInput = document.getElementsByClassName('answerInput');
@@ -382,6 +392,7 @@ const AnswersTextUnderline = (cb) => {
         textUnderline(cb, inputIdParts[0]);
     })
 }
+
 // Answers Group Alignment
 const AnswersTextAlignment = (alignment) => {
     const answersInput = document.getElementsByClassName('answerInput');
@@ -390,6 +401,7 @@ const AnswersTextAlignment = (alignment) => {
         setTextAlignment(alignment, inputIdParts[0]);
     })
 }
+
 // Answers Group Text Color
 const AnswersTextColor = (color) => {
     const answersInput = document.getElementsByClassName('answerInput');

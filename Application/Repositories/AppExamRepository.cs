@@ -26,26 +26,5 @@ namespace Application.Repositories
                 .Include(a => a.Questions).ThenInclude(q => q.AnswerOptions)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
-
-
-        //public async Task<AppExam> CreateNewExamAsync()
-        //{
-
-        //    var entity = new AppExam();
-
-        //    try
-        //    {
-        //        await Entities.AddAsync(entity);
-        //        if (await context.SaveChangesAsync() > 0)
-        //        {
-        //            return await Entities.FindAsync(GetKey(entity));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        RepositoryExceptions.Add(new Exception($"{nameof(entity)} could not be created: {ex.Message}"));
-        //    }
-        //    return null;
-        //}
     }
 }

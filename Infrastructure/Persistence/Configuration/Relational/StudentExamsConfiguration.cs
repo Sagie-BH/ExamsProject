@@ -14,10 +14,6 @@ namespace Infrastructure.Persistence.Configuration.Relational
             builder.Property(se => se.IsDone).IsRequired();
 
             builder.Property(se => se.Grade).HasPrecision(3, 2).IsRequired();
-
-            //builder.Property(se => se.Student).IsRequired();
-
-            //builder.Property(se => se.Exam).IsRequired();
         }
     }
 }
