@@ -83,17 +83,17 @@
         <hr class="my-4">
         <div>
             <label asp-for="Settings.ExamDueDate"></label>
-            <input type="date" asp-for="Settings.ExamDueDate" />
-            <span asp-validation-for="Settings.ExamDueDate"></span>
+            <input onchange="ValidateDueDate(this.value)" type="date" asp-for="Settings.ExamDueDate" value="@(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"))" />
+            <span id="dueDateValidationSpan" asp-validation-for="Settings.ExamDueDate"></span>
         </div>
         <hr class="my-4">
         <div>
             <label asp-for="Settings.ExamTimeLimit"></label>
-            <input type="time" asp-for="Settings.ExamTimeLimit" />
+            <input type="time" asp-for="Settings.ExamTimeLimit" value="01:30" />
             <span asp-validation-for="Settings.ExamTimeLimit"></span>
         </div>
         <hr class="my-4">
-        <button id="saveExamBtn"></button>
+        <button id="saveExamBtn">Save Exam</button>
     </form>
 </main>
 

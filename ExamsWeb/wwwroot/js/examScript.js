@@ -421,3 +421,28 @@ const AnswersTextColor = (color) => {
         setTextColor(color, inputIdParts[0]);
     })
 }
+
+// Save ExamSettings
+const SaveExamSettings = () => {
+
+}
+
+
+// OnChange Due Date 3 Months From Today Validation
+const ValidateDueDate = (dueDate) => {
+    const validationSpan = document.getElementById('dueDateValidationSpan');
+    let enteredMS = new Date(dueDate.replace('-', '/')).getTime();
+    let currentMS = new Date().getTime();
+    let threeMonthMS = new Date(new Date().setMonth(new Date().getMonth() + 3)).getTime();
+
+    if (enteredMS >= threeMonthMS) {
+        validationSpan.innerHTML = 'Due date can not surpass 3 months from now';
+        return false;
+    }
+    if (currentMS >= enteredMS) {
+        validationSpan.innerHTML = 'Please enter future date';
+        return false;
+    }
+    validationSpan.innerHTML = '';
+    return true;
+}
