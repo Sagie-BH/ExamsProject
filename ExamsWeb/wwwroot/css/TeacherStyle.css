@@ -98,3 +98,7 @@
 #examInputSection > * {
     margin-bottom: 5px;
 }
+.right-asnwer-cb {
+    height: 28px;
+    margin-top: 3px;
+}

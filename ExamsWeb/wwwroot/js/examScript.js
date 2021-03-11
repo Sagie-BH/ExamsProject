@@ -192,8 +192,10 @@ const SaveQuestion = inputID => {
         const answersInputArr = document.getElementsByClassName('answerInput');
         AddTextInputTemplate(newQuestion, false)
         Array.from(answersInputArr).forEach(input => {
+            let inputIdParts = input.id.split('AreaInput');
             let newAnswer = { ...baseAnswer };
             newAnswer.Text = input.value;
+            newAnswer.IsRightAnswer = document.getElementById(inputIdParts[0] + 'IsRightCb').checked;
             answerArr.push(newAnswer);
             AddTextInputTemplate(newAnswer, false);
         });
@@ -201,6 +203,7 @@ const SaveQuestion = inputID => {
         AddExamQuestionToStorage(newQuestion);
         document.getElementById("questionInput").classList.remove("hide");
         $(questionInputForm).remove();
+        answerIndex = 0;
     }
     return false;
 }
@@ -350,11 +353,19 @@ const AddExamQuestionToStorage = (questionInput) => {
 // Add Answer
 let answerIndex = 0;
 const AddAnswer = () => {
-    let answerAreaInput = document.getElementById('answerAreaInput');
-    let clone = answerAreaInput.cloneNode(false);
-    clone.id = 'answer' + index++ + 'AreaInput';
-    clone.value = '';
-    answerAreaInput.parentElement.insertAdjacentElement('beforeend', clone);
+    const answerDiv = document.getElementById('answerDiv');
+    const answerCb = document.getElementById('answerIsRightCb')
+    const answerAreaInput = document.getElementById('answerAreaInput');
+    let answerDivClone = answerDiv.cloneNode(false);
+    let answerCbClone = answerCb.cloneNode(false);
+    let answerInputClone = answerAreaInput.cloneNode(false);
+    answerInputClone.id = 'answer' + index + 'AreaInput';
+    answerInputClone.value = '';
+    answerCbClone.id = 'answer' + index++ + 'IsRightCb';
+    answerCbClone.value = false;
+    answerDivClone.insertAdjacentElement('beforeend', answerInputClone);
+    answerDivClone.insertAdjacentElement('beforeend', answerCbClone);
+    document.getElementById('anwersSection').insertAdjacentElement('beforeend', answerDivClone);
     return false;
 }
 // Answers Group Font Size
