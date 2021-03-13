@@ -8,13 +8,6 @@ namespace Domain.Entities.ObjectEntities
 {
     public class QuestionObject : DomainObject, IAggregateRoot
     {
-        public QuestionObject()
-        {
-            AnswerOptions = new List<AnswerOption>()
-            {
-                new AnswerOption()
-            };
-        }
         public int Index { get; set; }
         public ExamText QuestionText { get; set; }
 #nullable enable

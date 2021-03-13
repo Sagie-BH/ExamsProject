@@ -8,16 +8,10 @@ namespace Domain.Entities.ObjectEntities
 {
     public class AppExam : DomainObject, IAggregateRoot
     {
-        public AppExam()
-        {
-            Questions = new List<QuestionObject>();
-            ExamTexts = new List<ExamText>();
-            ExamImages = new List<ExamImage>();
-        }
 #nullable enable
+        public string? Description { get; set; }
         public bool? IsPrivate { get; set; }
         public Subject? ExamSubject { get; set; }
-        public string? Description { get; set; }
         public TimeSpan? TestTimeLimit { get; set; }
         public ICollection<QuestionObject>? Questions { get; set; }
         public ICollection<ExamText>? ExamTexts { get; set; }

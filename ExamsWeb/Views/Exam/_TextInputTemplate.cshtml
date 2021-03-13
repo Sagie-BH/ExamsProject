@@ -1,6 +1,17 @@
 ﻿@model ExamTextViewModel
 
 @{
+    string className = "";
+    if(Model.IdName == "text")
+    {
+        className = "mb-3 mt-1";
+    } else if (Model.IdName == "question")
+    {
+        className = "mb-1 mt-2";
+    } else
+    {
+        className = "mb-1";
+    }
     string size = Model.FontSize.ToString() + "px";
     string alignment = "";
     switch (Model.Alignment)
@@ -34,7 +45,8 @@
     else underline = "none";
 }
 
-<label style="width: 100%;
+<label class="@className"
+       style="width: 100%;
             color: @Model.Color;
             font-size: @size;
             text-align: @alignment;

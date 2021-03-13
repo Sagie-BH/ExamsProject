@@ -37,5 +37,13 @@ namespace ExamsWeb.Controllers
 
             return PartialView("_TextInput", viewModel);
         }
+        [HttpPost]
+        public IActionResult SaveNewExam([FromBody]ExamViewModel newExam)
+        {
+            var viewModel = newExam;
+
+            return Ok();
+        }
+
     }
 }

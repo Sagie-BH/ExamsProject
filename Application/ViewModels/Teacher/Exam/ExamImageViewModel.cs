@@ -10,6 +10,7 @@ namespace Application.ViewModels.Teacher.Exam
     public class ExamImageViewModel
     {
         public IFormFile Image { get; set; }
+        public string ImagePath { get; set; }
         public Alignment Alignment { get; set; }
         public AppSize ImageSizes { get; set; }
     };

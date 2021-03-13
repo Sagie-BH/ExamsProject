@@ -2,7 +2,7 @@
 const saveExamHeaderBtn = document.getElementById("saveExamHeaderBtn");
 const examHeader = document.getElementById("examHeader");
 
-let index = 0;
+let inputIndex = 0;
 
 saveExamHeaderBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -20,10 +20,10 @@ const ChangeHeaderSection = () => {
 
 // Save Header Input Values To Labels
 const SaveInputsToHeader = () => {
-    let examHeader = new ExamHeader();
-    examHeader.title = document.getElementById("examTitleInput").value
+    let examHeader = { };
+    examHeader.ExamTitle = document.getElementById("examTitleInput").value
     document.getElementById("examTitleLbl").innerText = document.getElementById("examTitleInput").value;
-    examHeader.description = document.getElementById("examDescriptionInput").value;
+    examHeader.ExamDescription = document.getElementById("examDescriptionInput").value;
     document.getElementById("examDescriptionLbl").innerText = document.getElementById("examDescriptionInput").value;
     examHeader.subjectTitle = document.getElementById("examSubTitleInput").value;
     document.getElementById("examSubjectTitleLbl").innerText = document.getElementById("examSubTitleInput").value;
@@ -128,7 +128,7 @@ const setTextAlignment = (alignment, input) => {
 
 // Getting Text Input Values From Inputs - Returns Exam Input Object
 const GetTextInputValues = (inputID) => {
-    let examInput = new ExamInput();
+    let examInput = { };
     examInput.Text = document.getElementById(inputID + "AreaInput").value;
     examInput.Color = document.getElementById(inputID + "ColorPicker").value;
     const fontSizeInput = document.getElementById(inputID + "FontSizeInput");
@@ -137,9 +137,6 @@ const GetTextInputValues = (inputID) => {
     examInput.Bold = document.getElementById(inputID + "BoldInput").checked;
     examInput.Underline = document.getElementById(inputID + "UnderlineInput").checked;
     examInput.Italic = document.getElementById(inputID + "ItalicInput").checked;
-    if (!inputID.includes("answer")) {
-        examInput.Index = index++;
-    }
     return examInput;
 }
 
@@ -152,9 +149,9 @@ const SaveTextInput = (inputID) => {
     $(currentInputForm).validate().form();
     if ($(currentInputForm).valid() == true) {
         let examTextInput = GetTextInputValues(inputID);
-        if (inputID == "text") {
-            AddExamTextToStorage(examTextInput, true);
-        }
+        examTextInput.Index = inputIndex++;
+        examTextInput.IdName = 'text';
+        AddExamTextToStorage(examTextInput);
         AddTextInputTemplate(examTextInput);
         document.getElementById("questionInput").classList.remove("hide");
         $(currentInputForm).remove();
@@ -186,24 +183,30 @@ const SaveQuestion = inputID => {
     const questionInputForm = document.getElementById('questionInputForm')
     $(questionInputForm).validate().form();
     if ($(questionInputForm).valid() == true) {
-        let newQuestion = GetTextInputValues(inputID);
+        let newQuestion = {};
+        newQuestion.QuestionText = GetTextInputValues(inputID);
+        newQuestion.Index = inputIndex++;
+        newQuestion.IdName = 'question';
         let answerArr = [];
         let baseAnswer = GetTextInputValues('answer');
         const answersInputArr = document.getElementsByClassName('answerInput');
-        AddTextInputTemplate(newQuestion, false)
-        Array.from(answersInputArr).forEach(input => {
+        AddTextInputTemplate(newQuestion.QuestionText, false)
+        let answerOptionIndex = 0;
+        Array.from(answersInputArr).forEach(input=> {
             let inputIdParts = input.id.split('AreaInput');
-            let newAnswer = { ...baseAnswer };
-            newAnswer.Text = input.value;
+            let newAnswer = { };
+            newAnswer.AnswerText = { ...baseAnswer };
+            newAnswer.AnswerText.Text = input.value;
             newAnswer.IsRightAnswer = document.getElementById(inputIdParts[0] + 'IsRightCb').checked;
+            newAnswer.Index = answerOptionIndex++;
             answerArr.push(newAnswer);
-            AddTextInputTemplate(newAnswer, false);
+            AddTextInputTemplate(newAnswer.AnswerText, false);
         });
+        answerOptionIndex = 0;
         newQuestion.AnswerOptions = answerArr;
         AddExamQuestionToStorage(newQuestion);
         document.getElementById("questionInput").classList.remove("hide");
         $(questionInputForm).remove();
-        answerIndex = 0;
     }
     return false;
 }
@@ -217,7 +220,7 @@ const GetTextInput = (textInputType) => {
         dataType: "html",
         contentType: "application/json; charset=utf-8",
         success: (data, info) => {
-            //console.log(data);
+            console.log(data);
             document.getElementById("inputsSection").insertAdjacentHTML('beforeend', data);
             document.getElementById("questionInput").classList.add("hide");
         },
@@ -237,7 +240,7 @@ document.getElementById("addExamImage").addEventListener('click', () => {
     let newDiv = document.createElement('div');
     newDiv.appendChild(newImage);
     newDiv.setAttribute('id', "examImageDiv" + imageCount);
-    newDiv.classList.add('mb-2');
+    newDiv.classList.add('mb-2','mt-1');
     newImage.classList.add('col-4');
     newImage.setAttribute('id', "examImage" + imageCount);
     document.getElementById("examInputSection").appendChild(newDiv);
@@ -255,7 +258,7 @@ document.getElementById("imageFileInput").addEventListener('change', (image) => 
 });
 
 // Change Image Alignment
-let newImageAlignment = "";
+let newImageAlignment = "0";
 const setImageAlignment = (alignment) => {
     const img = document.getElementById("examImage" + imageCount);
     switch (alignment.value) {
@@ -272,11 +275,11 @@ const setImageAlignment = (alignment) => {
             img.classList.add('ml-auto');
             break;
     }
-    newImageAlignment = alignment.options[alignment.selectedIndex].text;
+    newImageAlignment = alignment.options[alignment.selectedIndex].Text;
 }
 
 // Change Image Size
-let newImageSize = "";
+let newImageSize = "0";
 const setImageSize = (size) => {
     const img = document.getElementById("examImage" + imageCount);
     switch (size.value) {
@@ -301,7 +304,7 @@ const setImageSize = (size) => {
             img.classList.add('col-12');
             break;
     }
-    newImageSize = size.options[size.selectedIndex].text;
+    newImageSize = size.options[size.selectedIndex].Text;
 }
 
 // Saving ExamImage To Storage 
@@ -312,7 +315,7 @@ document.getElementById('SaveNewImageBtn').addEventListener('click', (e) => {
         ImagePath: newImage.src,
         ImageSize: newImageSize,
         Alignment: newImageAlignment,
-        Index: index++
+        Index: inputIndex++
     };
     imageCount++;
     AddExamImageToStorage(newImageToStore);
@@ -342,12 +345,12 @@ const AddExamImageToStorage = (imageInput) => {
 
 // Adding QuestionInput To Storage List
 const AddExamQuestionToStorage = (questionInput) => {
-    let ExamImages = JSON.parse(localStorage.getItem('ExamQuestions'));
-    if (ExamImages == null) {
-        ExamImages = [];
+    let Questions = JSON.parse(localStorage.getItem('ExamQuestions'));
+    if (Questions == null) {
+        Questions = [];
     }
-    ExamImages.push(questionInput);
-    localStorage.setItem('ExamQuestions', JSON.stringify(ExamImages));
+    Questions.push(questionInput);
+    localStorage.setItem('ExamQuestions', JSON.stringify(Questions));
 };
 
 // Add Answer
@@ -359,9 +362,9 @@ const AddAnswer = () => {
     let answerDivClone = answerDiv.cloneNode(false);
     let answerCbClone = answerCb.cloneNode(false);
     let answerInputClone = answerAreaInput.cloneNode(false);
-    answerInputClone.id = 'answer' + index + 'AreaInput';
+    answerInputClone.id = 'answer' + answerIndex + 'AreaInput';
     answerInputClone.value = '';
-    answerCbClone.id = 'answer' + index++ + 'IsRightCb';
+    answerCbClone.id = 'answer' + answerIndex++ + 'IsRightCb';
     answerCbClone.value = false;
     answerDivClone.insertAdjacentElement('beforeend', answerInputClone);
     answerDivClone.insertAdjacentElement('beforeend', answerCbClone);
@@ -374,8 +377,8 @@ const setAnswersFontSize = (size) => {
     Array.from(answersInput).forEach(input => {
         let inputIdParts = input.id.split('AreaInput');
         setFontSize(size, inputIdParts[0]);
-    })
-}
+    });
+};
 
 // Answers Group Bold
 const AnwersTextBold = (cb) => {
@@ -383,8 +386,8 @@ const AnwersTextBold = (cb) => {
     Array.from(answersInput).forEach(input => {
         let inputIdParts = input.id.split('AreaInput');
         textBold(cb, inputIdParts[0]);
-    })
-}
+    });
+};
 
 // Answers Group Italic
 const AnswersTextItalic = (cb) => {
@@ -392,8 +395,8 @@ const AnswersTextItalic = (cb) => {
     Array.from(answersInput).forEach(input => {
         let inputIdParts = input.id.split('AreaInput');
         textItalic(cb, inputIdParts[0]);
-    })
-}
+    });
+};
 
 // Answers Group Underline
 const AnswersTextUnderline = (cb) => {
@@ -401,8 +404,8 @@ const AnswersTextUnderline = (cb) => {
     Array.from(answersInput).forEach(input => {
         let inputIdParts = input.id.split('AreaInput');
         textUnderline(cb, inputIdParts[0]);
-    })
-}
+    });
+};
 
 // Answers Group Alignment
 const AnswersTextAlignment = (alignment) => {
@@ -410,8 +413,8 @@ const AnswersTextAlignment = (alignment) => {
     Array.from(answersInput).forEach(input => {
         let inputIdParts = input.id.split('AreaInput');
         setTextAlignment(alignment, inputIdParts[0]);
-    })
-}
+    });
+};
 
 // Answers Group Text Color
 const AnswersTextColor = (color) => {
@@ -419,30 +422,71 @@ const AnswersTextColor = (color) => {
     Array.from(answersInput).forEach(input => {
         let inputIdParts = input.id.split('AreaInput');
         setTextColor(color, inputIdParts[0]);
-    })
-}
+    });
+};
 
 // Save ExamSettings
 const SaveExamSettings = () => {
-
+    const dueDateValidationSpan = document.getElementById('dueDateValidationSpan');
+    const timeLimitValidationSpan = document.getElementById('timeLimitValidationSpan');
+    if (dueDateValidationSpan.innerText == '' && timeLimitValidationSpan.innerText == '') {
+        let ExamSettings = {};
+        ExamSettings.IsExamPrivate = document.getElementById('examPrivacyInput').checked;
+        ExamSettings.ExamDueDate = document.getElementById('dueDateInput').value;
+        ExamSettings.ExamTimeLimit = document.getElementById('timeLimitInput').value;
+        localStorage.setItem('ExamSettings', JSON.stringify(ExamSettings));
+    };
+    return false;
 }
 
 
 // OnChange Due Date 3 Months From Today Validation
-const ValidateDueDate = (dueDate) => {
+const ValidateDueDate = (dueDateInput) => {
     const validationSpan = document.getElementById('dueDateValidationSpan');
-    let enteredMS = new Date(dueDate.replace('-', '/')).getTime();
+    let enteredMS = new Date(dueDateInput.value.replace('-', '/')).getTime();
     let currentMS = new Date().getTime();
     let threeMonthMS = new Date(new Date().setMonth(new Date().getMonth() + 3)).getTime();
-
     if (enteredMS >= threeMonthMS) {
+        dueDateInput.setAttribute('aria-invalid', 'true');
         validationSpan.innerHTML = 'Due date can not surpass 3 months from now';
-        return false;
+        return;
     }
     if (currentMS >= enteredMS) {
+        dueDateInput.setAttribute('aria-invalid', 'true');
         validationSpan.innerHTML = 'Please enter future date';
-        return false;
+        return;
     }
     validationSpan.innerHTML = '';
-    return true;
+    dueDateInput.setAttribute('aria-invalid', 'false');
 }
+
+const SaveExam = (teacherId) => {
+    SaveExamSettings();
+    let newExam = {};
+    newExam.TeacherId = teacherId;
+    newExam.ExamHeader = JSON.parse(localStorage.getItem('ExamHeader'));
+    newExam.Settings = JSON.parse(localStorage.getItem('ExamSettings'));
+    newExam.Questions = JSON.parse(localStorage.getItem('ExamQuestions'));
+    newExam.ExamTexts = JSON.parse(localStorage.getItem('ExamTexts'));
+    newExam.ExamImages = JSON.parse(localStorage.getItem('ExamImages'));
+    SendExamToServer(newExam);
+    return false;
+}
+
+// Saving Exam To Server
+const SendExamToServer = (newExam) => {
+    $.ajax({
+        type: "POST",
+        url: 'SaveNewExam/',
+        data: JSON.stringify(newExam),
+        contentType: "application/json",
+        success: (data, info) => {
+            console.log(data);
+        },
+        error: (data, err) => {
+            console.log(data);
+            console.log(err);
+        }
+    });
+};
+

@@ -31,14 +31,14 @@
         </div>
     </section>
 </header>
-<hr class="my-4">
+<hr class="my-4 mr-0 ml-0">
 
 
-<main class="row mt-2">
+<main class="row mt-2 px-md-4">
     <!--Exam View-->
-    <div class="offset-1 col-md-8 p-2">
+    <div class="offset-md-1 col-md-8 p-2">
 
-        <hr class="my-2 col-12">
+        <hr class="my-2 mr-0 ml-0">
         <section class="p-2 my-2" id="examInputSection">
         </section>
         <section class="p-2 my-2" id="inputsSection">
@@ -64,38 +64,38 @@
                 <label class="addIconLbl col-12 text-center">Add Image</label>
             </a>
         </section>
-        <hr class="my-2 col-11">
+        <hr class="my-2 mr-0 ml-0">
 
     </div>
 
 
 
     <!--Exam Settings-->
-    <form id="examSettingsForm" class="col-md-2 p-2 ml-2">
+    <form id="examSettingsForm" class="offset-md-1 col-md-2 p-2 ml-md-5 offset-2 col-8">
         <img id="examSettingsIcon" src="~/images/settings-icon.png" class="float-right" />
         <div class="d-flex justify-content-between">
             <h5>Exam Settings</h5>
         </div>
         <div class="mt-4">
             <label asp-for="Settings.IsExamPrivate"></label>
-            <input asp-for="Settings.IsExamPrivate" />
+            <input id="examPrivacyInput" asp-for="Settings.IsExamPrivate" />
         </div>
         <hr class="my-4">
         <div>
             <label asp-for="Settings.ExamDueDate"></label>
-            <input onchange="ValidateDueDate(this.value)" type="date" asp-for="Settings.ExamDueDate" value="@(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"))" />
-            <span id="dueDateValidationSpan" asp-validation-for="Settings.ExamDueDate"></span>
+            <input id="dueDateInput" onchange="ValidateDueDate(this)" type="date" asp-for="Settings.ExamDueDate" 
+                   value="@(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"))" />
+            <span id="dueDateValidationSpan"></span>
         </div>
         <hr class="my-4">
         <div>
             <label asp-for="Settings.ExamTimeLimit"></label>
-            <input type="time" asp-for="Settings.ExamTimeLimit" value="01:30" />
-            <span asp-validation-for="Settings.ExamTimeLimit"></span>
+            <input id="timeLimitInput" type="time" asp-for="Settings.ExamTimeLimit" value="01:30" />
+            <span id="timeLimitValidationSpan" asp-validation-for="Settings.ExamTimeLimit"></span>
         </div>
         <hr class="my-4">
-        <button id="saveExamBtn">Save Exam</button>
+        <button class="btn btn-primary mt-3 float-right" id="saveExamBtn" onclick="return SaveExam(@(Model.TeacherId))">Save Exam</button>
     </form>
 </main>
 
-<script src="~/js/Models/ExamHeader.js"></script>
 <script src="~/js/examScript.js"></script>
